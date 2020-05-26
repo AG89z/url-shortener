@@ -6,13 +6,14 @@ Content-Type: application/json
 
 {
   "destination": "https://wikipedia.org",
-  "expiry": "2020-05-26T20:51:53.380Z"
+  "expiry": "2020-05-27T20:51:53.380Z",
+  "password": "fijlkam"
 }
 
 ###
-GET http://localhost:5000/v0/links/55360007-f5ae-4c44-9821-e3cb14c02c61
+GET http://localhost:5000/v0/links/8174467c-0953-4cd3-88f9-2052555f436a
 
 ###
-GET http://localhost:5000/6CR5KuvLH
+GET http://localhost:5000/fK-PmsB2X
 
 

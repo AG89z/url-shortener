@@ -7,18 +7,24 @@ const { OpenApiValidator } = require("express-openapi-validator");
 const router = require("./middlewares/router");
 const redirectLinks = require("./middlewares/redirectLinks");
 
+const apiSpec = "./api/api.yaml";
+const PORT = process.env.PORT;
+
 const app = express();
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded());
 
-const apiSpec = "./api/api.yaml";
+app.use(express.static('src/public'));
+
+app.set("view engine", "ejs");
 
 app.use("/spec", express.static(apiSpec));
 
 new OpenApiValidator({
   apiSpec,
   validateRequests: true,
-  validateResponses: true
+  validateResponses: true,
 })
   .install(app)
   .then(() => {
@@ -32,7 +38,6 @@ new OpenApiValidator({
         errors: err.errors,
       });
     });
-    const PORT = process.env.PORT;
 
     app.listen(PORT, () => {
       console.log(`App listening on port ${PORT}`);
