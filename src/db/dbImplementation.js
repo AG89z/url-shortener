@@ -35,8 +35,7 @@ function findOneBy(by, value) {
           .split(/(?:\n)/g)
           .map((s) => s && JSON.parse(s));
         const found = entries.find((entry) => entry[by] === value);
-        // resolve(found);
-        reject("F:SDKJFD:SLKJFD")
+        resolve(found);
       }
     });
   });
@@ -59,7 +58,8 @@ function getAll() {
         const entries = data
           .toString()
           .split(/(?:\n)/g)
-          .map((s) => s && JSON.parse(s));
+          .map((s) => s && JSON.parse(s))
+          .filter((s) => Boolean(s));
 
         resolve(entries);
       }
@@ -71,5 +71,5 @@ module.exports = {
   addOne,
   findOneByLink,
   findOneById,
-  getAll
+  getAll,
 };

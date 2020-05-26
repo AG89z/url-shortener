@@ -5,13 +5,14 @@ POST http://localhost:5000/v0/links
 Content-Type: application/json
 
 {
-  "destination": "https://youtube.com"
+  "destination": "https://wikipedia.org",
+  "expiry": "2020-05-25"
 }
 
 ###
 GET http://localhost:5000/v0/links/55360007-f5ae-4c44-9821-e3cb14c02c61
 
 ###
-GET http://localhost:5000/GRDi-I-Uc
+GET http://localhost:5000/6CR5KuvLH
 
 

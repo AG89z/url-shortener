@@ -12,8 +12,8 @@ function toResource(link) {
   };
 }
 
-function createOne({ destination, expiry = null, password = null }) {
-  return toResource(DB.addOne({ destination, password, expiry }));
+async function createOne({ destination, expiry = null, password = null }) {
+  return toResource(await DB.addOne({ destination, password, expiry }));
 }
 
 async function getOne(id) {
@@ -26,10 +26,18 @@ async function getOne(id) {
   }
 }
 
+async function lookup(link) {
+  const found = await DB.findOneByLink(link);
 
+  if(found) {
+    return found;
+  } else {
+    return null;
+  }
+}
 
 async function getAll() {
   return (await DB.getAll()).map(toResource);
 }
 
-module.exports = { createOne, getOne, getAll };
+module.exports = { createOne, getOne, getAll, lookup };

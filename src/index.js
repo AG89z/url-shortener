@@ -4,8 +4,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const { OpenApiValidator } = require("express-openapi-validator");
 
-const router = require("./router");
-const db = require("./db/index");
+const router = require("./middlewares/router");
+const redirectLinks = require("./middlewares/redirectLinks");
 
 const app = express();
 
@@ -22,18 +22,7 @@ new OpenApiValidator({
   .install(app)
   .then(() => {
     app.use(router);
-
-    app.use("*", async (req, res) => {
-      const link = req.baseUrl.substr(1);
-
-      const found = await db.findByLink(link);
-
-      if (found) {
-        res.redirect(found.destination);
-      } else {
-        res.status(404).end();
-      }
-    });
+    app.use(redirectLinks);
 
     app.use((err, req, res, next) => {
       console.log(err);
@@ -42,10 +31,9 @@ new OpenApiValidator({
         errors: err.errors,
       });
     });
-
     const PORT = process.env.PORT;
+
     app.listen(PORT, () => {
       console.log(`App listening on port ${PORT}`);
     });
   });
-  
