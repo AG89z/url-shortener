@@ -1,0 +1,51 @@
+require("dotenv").config();
+
+const express = require("express");
+const bodyParser = require("body-parser");
+const { OpenApiValidator } = require("express-openapi-validator");
+
+const router = require("./router");
+const db = require("./db/index");
+
+const app = express();
+
+app.use(bodyParser.json());
+
+const apiSpec = "./api/api.yaml";
+
+app.use("/spec", express.static(apiSpec));
+
+new OpenApiValidator({
+  apiSpec,
+  validateRequests: true,
+})
+  .install(app)
+  .then(() => {
+    app.use(router);
+
+    app.use("*", async (req, res) => {
+      const link = req.baseUrl.substr(1);
+
+      const found = await db.findByLink(link);
+
+      if (found) {
+        res.redirect(found.destination);
+      } else {
+        res.status(404).end();
+      }
+    });
+
+    app.use((err, req, res, next) => {
+      console.log(err);
+      res.status(err.status || 500).json({
+        message: err.message,
+        errors: err.errors,
+      });
+    });
+
+    const PORT = process.env.PORT;
+    app.listen(PORT, () => {
+      console.log(`App listening on port ${PORT}`);
+    });
+  });
+  
