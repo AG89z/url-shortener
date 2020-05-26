@@ -21,11 +21,11 @@ paths:
               properties:
                 destination:
                   type: 'string'
-                  format: 'url'
+                  format: 'uri'
                   description: 'The destination URL the short link will to point to'
                 expiry:
                   type: 'string'
-                  format: 'date'
+                  format: 'date-time'
                   description: 'An optional expiry date for the validity of the short link'
                 password:
                   type: 'string'
@@ -93,11 +93,11 @@ paths:
                 destination:
                   description: 'Update the destination URL'
                   type: 'string'
-                  format: 'url'
+                  format: 'uri'
                 expiry:
                   description: 'Update the expiry date of the link'
                   type: 'string'
-                  format: 'date'
+                  format: 'date-time'
                 password:
                   description: >-
                     Update or add a password to the link. If it's an update, the previousPassword field is mandatory
@@ -141,19 +141,19 @@ components:
         created:
           description: 'The createion date of the short link'
           type: 'string'
-          format: 'date'
+          format: 'date-time'
         expiry:
           description: 'The expiry date of the short link, if any'
           type: 'string'
-          format: 'date'
+          format: 'date-time'
         link:
           description: 'The short link'
           type: 'string'
-          format: 'url'
+          format: 'uri'
         destination:
           description: 'The destination URL the short link points to'
           type: 'string'
-          format: 'url'
+          format: 'uri'
         protected:
           description: 'Whether or not the link is password protected'
           type: 'boolean'

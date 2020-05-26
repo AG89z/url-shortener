@@ -6,7 +6,7 @@ Content-Type: application/json
 
 {
   "destination": "https://wikipedia.org",
-  "expiry": "2020-05-25"
+  "expiry": "2020-05-26T20:51:53.380Z"
 }
 
 ###

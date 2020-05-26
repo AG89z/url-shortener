@@ -18,6 +18,7 @@ app.use("/spec", express.static(apiSpec));
 new OpenApiValidator({
   apiSpec,
   validateRequests: true,
+  validateResponses: true
 })
   .install(app)
   .then(() => {

@@ -6,7 +6,7 @@ module.exports.postLink = wrapAsync(async (req, res) => {
 
   const link = await Link.createOne({ destination, password, expiry });
 
-  res.status(200).json(link);
+  res.status(201).json(link);
 });
 
 module.exports.getLinks = wrapAsync(async (req, res) => {

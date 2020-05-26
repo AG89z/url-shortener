@@ -12,7 +12,7 @@ function addOne({ destination, password = null, expiry = null }) {
       destination,
       password,
       expiry,
-      created: new Date(),
+      created: new Date().toISOString(),
     };
     fs.appendFile(db, `${JSON.stringify(newLink)}\n`, (err) => {
       if (err) {
