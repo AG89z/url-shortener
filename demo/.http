@@ -1,17 +1,28 @@
+@userOne = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJTdXBlckJ1c2luZXNzIiwiaWF0IjoxNTkwNTc5MzY3LCJleHAiOjI1MzcyNjQyOTMsImF1ZCI6Ind3dy5zdXBlcmJ1c2luZXNzLmNvbSIsInN1YiI6IkpvaG5ueSBSb2NrZXQiLCJOYW1lIjoiSm9obm55IiwiU3VybmFtZSI6IlJvY2tldCIsImlkIjoiZWIzYTllYzgtOWRkYy00NGE3LWE2ZGMtMzJlM2QyZTJkZmI4In0.Slf9U8RWbEMA2r6S_s9oPnZhuKy5PCHBM8mfHgrryAQ
+@userTwo = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJTdXBlckJ1c2luZXNzIiwiaWF0IjoxNTkwNTc5MzY3LCJleHAiOjI1MzcyNjQyOTMsImF1ZCI6Ind3dy5zdXBlcmJ1c2luZXNzLmNvbSIsInN1YiI6IkVtaWx5IFdhdHNvbiIsIk5hbWUiOiJFbWlseSIsIlN1cm5hbWUiOiJXYXRzb24iLCJpZCI6ImFjNGIxYXYwLTlkZGMtNDRhNy1hNmRjLTMyZTNkMmUyZGZiOCJ9.hgHt7EgMj1wYkpEKHqkOB0hj5aH6JhTQXDEM4DZ8bH8
+
+###
 GET http://localhost:5000/v0/links
+Authorization: Bearer {{userOne}}
 
 ###
 POST http://localhost:5000/v0/links
 Content-Type: application/json
+Authorization: Bearer {{userOne}}
 
 {
   "destination": "https://wikipedia.org",
-  "expiry": "2021-05-30T20:51:53.380Z",
-  "password": "fijlkam"
+  "expiry": "2021-05-30T20:51:53.380Z"
 }
 
 ###
-GET http://localhost:5000/v0/links/aaf0ae8c-e573-4f7b-9d2c-8dbcdeefbf5a
+GET http://localhost:5000/v0/links/f66e61df-5dd0-49d2-ad46-36e25d024a0e
+Authorization: Bearer {{userOne}}
+
+### Unauthorized user
+GET http://localhost:5000/v0/links/f66e61df-5dd0-49d2-ad46-36e25d024a0e
+Authorization: Bearer {{userTwo}}
+
 
 ###
 GET http://localhost:5000/iwdRejArk

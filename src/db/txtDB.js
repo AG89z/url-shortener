@@ -1,5 +1,5 @@
 const fs = require("fs");
-const path = require('path');
+const path = require("path");
 
 const DB = path.join(__dirname, "__DB.txt");
 
@@ -32,7 +32,7 @@ function findOne(key, value) {
   });
 }
 
-function getAll() {
+function find(key = null, value = null) {
   return new Promise((resolve, reject) => {
     fs.readFile(DB, (err, data) => {
       if (err) {
@@ -42,7 +42,7 @@ function getAll() {
           .toString()
           .split(/(?:\n)/g)
           .map((s) => s && JSON.parse(s))
-          .filter((s) => Boolean(s));
+          .filter((s) => Boolean(s) && (!key || s[key] === value));
 
         resolve(entries);
       }
@@ -53,5 +53,5 @@ function getAll() {
 module.exports = {
   addOne,
   findOne,
-  getAll,
+  find,
 };

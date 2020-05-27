@@ -1,5 +1,5 @@
 const {Router} = require("express");
-const { lookup } = require("../services/link");
+const { lookup } = require("../services/links");
 const { wrapAsync } = require("../utils/wrapAync");
 
 const router = Router();

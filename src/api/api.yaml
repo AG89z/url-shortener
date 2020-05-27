@@ -138,6 +138,10 @@ components:
           description: 'The short link ID'
           type: 'string'
           format: 'uuid'
+        author:
+          description: 'The user ID of the creator of the link'
+          type: 'string'
+          format: 'uuid'
         created:
           description: 'The createion date of the short link'
           type: 'string'

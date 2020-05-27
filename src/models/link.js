@@ -3,9 +3,10 @@ const shortId = require("shortid");
 
 const txtDB = require("../db/txtDB");
 
-function makeLink({ destination, password, expiry }) {
+function makeLink({ destination, author, password, expiry }) {
   return {
     id: uuid(),
+    author,
     link: shortId(),
     destination,
     password,
@@ -14,8 +15,8 @@ function makeLink({ destination, password, expiry }) {
   };
 }
 
-function addOne({ destination, password = null, expiry = null }) {
-  return txtDB.addOne(makeLink({ destination, password, expiry }));
+function addOne({ destination, author, password = null, expiry = null }) {
+  return txtDB.addOne(makeLink({ destination, author, password, expiry }));
 }
 
 function findOneByLink(link) {
@@ -27,7 +28,7 @@ function findOneById(id) {
 }
 
 function getAll() {
-  return txtDB.getAll();
+  return txtDB.find();
 }
 
 module.exports = {

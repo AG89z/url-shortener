@@ -14,8 +14,8 @@ function toResource(link) {
   };
 }
 
-async function createOne({ destination, expiry = null, password = null }) {
-  return toResource(await LinkModel.addOne({ destination, password, expiry }));
+async function createOne({ destination, author, expiry = null, password = null }) {
+  return toResource(await LinkModel.addOne({ destination, author, password, expiry }));
 }
 
 async function getOne(id) {
@@ -41,5 +41,6 @@ async function lookup(link) {
 async function getAll() {
   return (await LinkModel.getAll()).map(toResource);
 }
+
 
 module.exports = { createOne, getOne, getAll, lookup };

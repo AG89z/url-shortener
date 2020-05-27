@@ -7,6 +7,7 @@ const { OpenApiValidator } = require("express-openapi-validator");
 const linksController = require("./controllers/links");
 const redirectController = require("./controllers/redirect");
 const errorHandler = require("./middlewares/errorHandler");
+const checkJwt = require('./middlewares/checkJwt')
 
 const API_SPEC = "src/api/api.yaml";
 const PORT = config.PORT;
@@ -24,6 +25,8 @@ app.set("view engine", "ejs");
 app.get("/", (req, res) => {
   res.render("../src/views/index");
 });
+
+app.use(checkJwt);
 
 new OpenApiValidator({
   apiSpec: API_SPEC,

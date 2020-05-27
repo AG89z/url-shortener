@@ -1,16 +1,19 @@
 const { Router } = require("express");
 
-const Link = require("../services/link");
+const LinksService = require("../services/links");
 const { wrapAsync } = require("../utils/wrapAync");
+const checkJwt = require("../middlewares/checkJwt");
 
 const router = Router();
-
 router.post(
   "/v0/links",
+  // @ts-ignore
+  checkJwt,
   wrapAsync(async (req, res) => {
+    const { user } = req;
     const { destination, password, expiry } = req.body;
 
-    const link = await Link.createOne({ destination, password, expiry });
+    const link = await LinksService.createOne({ destination, author: user.id, password, expiry });
 
     res.status(201).json(link);
   })
@@ -18,8 +21,12 @@ router.post(
 
 router.get(
   "/v0/links",
+  // @ts-ignore
+  checkJwt,
   wrapAsync(async (req, res) => {
-    const links = await Link.getAll();
+    const { user } = req;
+
+    const links = (await LinksService.getAll()).filter((link) => link.author === user.id);
 
     res.status(200).json(links);
   })
@@ -27,14 +34,21 @@ router.get(
 
 router.get(
   "/v0/links/:id",
+  // @ts-ignore
+  checkJwt,
   wrapAsync(async (req, res) => {
+    const { user } = req;
     const { id } = req.params;
 
-    const link = await Link.getOne(id);
+    const link = await LinksService.getOne(id);
 
-    if (link) {
+    const authorized = link && link.author === user.id;
+
+    if (link && authorized) {
       res.status(200).json(link);
-    } else {
+    } else if (link && !authorized) {
+      res.status(401).end();
+    }else {
       res.status(404).end();
     }
   })
@@ -61,4 +75,3 @@ router.get(
 // );
 
 module.exports = router;
-
