@@ -11,9 +11,8 @@ Content-Type: application/json
 Authorization: Bearer {{userOne}}
 
 {
-  "destination": "https://youtube.com/",
-  "expiry": "2021-05-30T20:51:53.380Z",
-  "password": "fijlkam"
+  "destination": "http://www.codeplastic.com/",
+  "expiry": "2021-05-30T20:51:53.380Z"
 }
 
 ###

@@ -4,8 +4,14 @@ const shortId = require("shortid");
 const txtDB = require("../db/txtDB");
 const { hashPassword } = require("../utils/password");
 
-function makeLink({ destination, author, password, expiry }) {
-  return hashPassword(password).then((hash) => ({
+async function makeLink({ destination, author, password, expiry }) {
+  let hash;
+
+  if (password) {
+    hash = await hashPassword(password);
+  }
+
+  return {
     id: uuid(),
     author,
     link: shortId(),
@@ -13,7 +19,7 @@ function makeLink({ destination, author, password, expiry }) {
     password: hash,
     expiry,
     created: new Date().toISOString(),
-  }));
+  };
 }
 
 async function addOne({ destination, author, password = null, expiry = null }) {
