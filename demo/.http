@@ -11,7 +11,7 @@ Content-Type: application/json
 Authorization: Bearer {{userOne}}
 
 {
-  "destination": "https://wikipedia.org",
+  "destination": "https://youtube.com/",
   "expiry": "2021-05-30T20:51:53.380Z"
 }
 
@@ -26,5 +26,4 @@ Authorization: Bearer {{userTwo}}
 
 ###
 GET http://localhost:5000/iwdRejArk
-
 

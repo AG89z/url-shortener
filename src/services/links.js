@@ -15,7 +15,13 @@ function toResource(link) {
 }
 
 async function createOne({ destination, author, expiry = null, password = null }) {
-  return toResource(await LinkModel.addOne({ destination, author, password, expiry }));
+  const checkDestination = new RegExp(config.ALLOWED_DESTINATIONS);
+
+  if(checkDestination.test(destination)) {
+    return toResource(await LinkModel.addOne({ destination, author, password, expiry }));
+  } else {
+    return null
+  }
 }
 
 async function getOne(id) {

@@ -1,6 +1,8 @@
-authentication
 only allowd omain urls
 hash password
 cors ?
 README
-decide on return error type
+Improve error handling
+POST /test in development to generate JWTs
+PATCH and DELETE
+Tests

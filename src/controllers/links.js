@@ -3,6 +3,7 @@ const { Router } = require("express");
 const LinksService = require("../services/links");
 const { wrapAsync } = require("../utils/wrapAync");
 const checkJwt = require("../middlewares/checkJwt");
+const makeError = require("../utils/makeError");
 
 const router = Router();
 router.post(
@@ -15,7 +16,15 @@ router.post(
 
     const link = await LinksService.createOne({ destination, author: user.id, password, expiry });
 
-    res.status(201).json(link);
+    if (link) {
+      res.status(201).json(link);
+    } else {
+      res
+        .status(400)
+        .json(
+          makeError("BAD REQUEST", `You can't create a short link for the domain ${destination}`)
+        );
+    }
   })
 );
 
@@ -47,9 +56,9 @@ router.get(
     if (link && authorized) {
       res.status(200).json(link);
     } else if (link && !authorized) {
-      res.status(401).end();
-    }else {
-      res.status(404).end();
+      res.status(401).json(makeError("UNAUTHORIZED", "You are not authorized to view this link"));
+    } else {
+      res.status(404).json(makeError("NOT FOUND", `No link found with id ${id}`));
     }
   })
 );

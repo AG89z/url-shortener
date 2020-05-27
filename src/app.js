@@ -15,7 +15,7 @@ const PORT = config.PORT;
 const app = express();
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(express.static("src/public"));
 app.use(express.static("src/api"));
@@ -25,8 +25,6 @@ app.set("view engine", "ejs");
 app.get("/", (req, res) => {
   res.render("../src/views/index");
 });
-
-app.use(checkJwt);
 
 new OpenApiValidator({
   apiSpec: API_SPEC,
