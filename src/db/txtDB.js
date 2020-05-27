@@ -1,32 +1,23 @@
 const fs = require("fs");
-const uuid = require("uuid").v4;
-const shortId = require("shortid");
+const path = require('path');
 
-const db = "db.txt";
+const DB = path.join(__dirname, "__DB.txt");
 
-function addOne({ destination, password = null, expiry = null }) {
+function addOne(document) {
   return new Promise((resolve, reject) => {
-    const newLink = {
-      id: uuid(),
-      link: shortId(),
-      destination,
-      password,
-      expiry,
-      created: new Date().toISOString(),
-    };
-    fs.appendFile(db, `${JSON.stringify(newLink)}\n`, (err) => {
+    fs.appendFile(DB, `${JSON.stringify(document)}\n`, (err) => {
       if (err) {
         reject(err);
       } else {
-        resolve(newLink);
+        resolve(document);
       }
     });
   });
 }
 
-function findOneBy(by, value) {
+function findOne(key, value) {
   return new Promise((resolve, reject) => {
-    fs.readFile(db, (err, data) => {
+    fs.readFile(DB, (err, data) => {
       if (err) {
         reject(err);
       } else {
@@ -34,24 +25,16 @@ function findOneBy(by, value) {
           .toString()
           .split(/(?:\n)/g)
           .map((s) => s && JSON.parse(s));
-        const found = entries.find((entry) => entry[by] === value);
+        const found = entries.find((entry) => entry[key] === value);
         resolve(found);
       }
     });
   });
 }
 
-function findOneByLink(link) {
-  return findOneBy("link", link);
-}
-
-function findOneById(id) {
-  return findOneBy("id", id);
-}
-
 function getAll() {
   return new Promise((resolve, reject) => {
-    fs.readFile(db, (err, data) => {
+    fs.readFile(DB, (err, data) => {
       if (err) {
         reject(err);
       } else {
@@ -69,7 +52,6 @@ function getAll() {
 
 module.exports = {
   addOne,
-  findOneByLink,
-  findOneById,
+  findOne,
   getAll,
 };

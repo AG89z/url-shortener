@@ -1,4 +1,4 @@
-const DB = require("../db/index");
+const LinkModel = require('../models/link')
 
 function toResource(link) {
   return {
@@ -13,11 +13,11 @@ function toResource(link) {
 }
 
 async function createOne({ destination, expiry = null, password = null }) {
-  return toResource(await DB.addOne({ destination, password, expiry }));
+  return toResource(await LinkModel.addOne({ destination, password, expiry }));
 }
 
 async function getOne(id) {
-  const link = await DB.findOneById(id);
+  const link = await LinkModel.findOneById(id);
 
   if (link) {
     return toResource(link);
@@ -27,7 +27,7 @@ async function getOne(id) {
 }
 
 async function lookup(link) {
-  const found = await DB.findOneByLink(link);
+  const found = await LinkModel.findOneByLink(link);
 
   if(found) {
     return found;
@@ -37,7 +37,7 @@ async function lookup(link) {
 }
 
 async function getAll() {
-  return (await DB.getAll()).map(toResource);
+  return (await LinkModel.getAll()).map(toResource);
 }
 
 module.exports = { createOne, getOne, getAll, lookup };

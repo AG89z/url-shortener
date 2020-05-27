@@ -1,10 +1,10 @@
-const express = require("express");
+const {Router} = require("express");
 const { lookup } = require("../services/link");
 const { wrapAsync } = require("../utils/wrapAync");
 
-const redirect = express();
+const router = Router();
 
-redirect.post(
+router.post(
   "/verify",
   wrapAsync(async (req, res) => {
     const { password, link } = req.body;
@@ -24,7 +24,7 @@ redirect.post(
   })
 );
 
-redirect.use(
+router.use(
   "*",
   wrapAsync(async (req, res) => {
     const match = req.baseUrl.match(/\/(.+)\/?/);
@@ -52,4 +52,4 @@ redirect.use(
   })
 );
 
-module.exports = redirect;
+module.exports = router;
