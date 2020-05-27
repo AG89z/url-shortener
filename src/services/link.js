@@ -1,3 +1,5 @@
+const config = require('../config')
+
 const LinkModel = require('../models/link')
 
 function toResource(link) {
@@ -5,8 +7,8 @@ function toResource(link) {
     ...link,
     password: undefined,
     link:
-      process.env.NODE_ENV === "development"
-        ? `http://localhost:${process.env.PORT}/${link.link}`
+      config.NODE_ENV === "development"
+        ? `http://localhost:${config.PORT}/${link.link}`
         : `https://sh.nm/${link.link}`,
     protected: Boolean(link.password),
   };

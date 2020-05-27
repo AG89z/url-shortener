@@ -1,4 +1,5 @@
-require("dotenv").config();
+const config = require('./config')
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const { OpenApiValidator } = require("express-openapi-validator");
@@ -8,7 +9,7 @@ const redirectController = require("./controllers/redirect");
 const errorHandler = require("./middlewares/errorHandler");
 
 const API_SPEC = "src/api/api.yaml";
-const PORT = process.env.PORT || 5000;
+const PORT = config.PORT;
 
 const app = express();
 
