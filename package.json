@@ -2,19 +2,19 @@
   "name": "url-shortener",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "start": "nodemon src",
-    "validateApi": "npx swagger-cli validate api/api.yaml"
+    "start": "nodemon src/app.js",
+    "validateApi": "npx swagger-cli validate src/api/api.yaml"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "@apidevtools/swagger-cli": "^4.0.3"
   },
   "dependencies": {
-    "@apidevtools/swagger-cli": "^4.0.3",
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "ejs": "^3.1.3",

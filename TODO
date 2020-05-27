@@ -1,3 +1,5 @@
+authentication
+only allowd omain urls
 hash password
 cors ?
 README
