@@ -174,7 +174,7 @@ components:
     Error:
       type: "object"
       properties:
-        type:
+        error:
           type: 'string'
         message:
           type: 'string'

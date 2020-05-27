@@ -1,6 +1,6 @@
-function makeError(type, message) {
+function makeError(error, message) {
   return {
-    type,
+    error,
     message,
   };
 }
