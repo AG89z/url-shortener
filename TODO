@@ -1,4 +1,3 @@
-only allowd omain urls
 hash password
 cors ?
 README
@@ -6,3 +5,4 @@ Improve error handling
 POST /test in development to generate JWTs
 PATCH and DELETE
 Tests
+Clean architecture

@@ -12,7 +12,8 @@ Authorization: Bearer {{userOne}}
 
 {
   "destination": "https://youtube.com/",
-  "expiry": "2021-05-30T20:51:53.380Z"
+  "expiry": "2021-05-30T20:51:53.380Z",
+  "password": "fijlkam"
 }
 
 ###

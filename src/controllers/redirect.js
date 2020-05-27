@@ -1,8 +1,12 @@
-const {Router} = require("express");
+const { Router } = require("express");
 const { lookup } = require("../services/links");
 const { wrapAsync } = require("../utils/wrapAync");
+const { checkPassword } = require("../utils/password");
+const makeError = require("../utils/makeError");
 
 const router = Router();
+
+//TODO Make view for all the errors
 
 router.post(
   "/verify",
@@ -10,15 +14,19 @@ router.post(
     const { password, link } = req.body;
 
     if (!password || !link) {
-      res.status(400).end();
+      res.status(400).json(makeError("BAD REQUEST", "Link or password missing"));
     } else {
       const found = await lookup(link);
       if (!found) {
-        res.status(404).end();
-      } else if (found.password === password) {
-        res.redirect(found.destination);
+        res.status(404).json(makeError("LINK NOT FOUND", `${link} is not an existing link`));
       } else {
-        res.status(403).end();
+        const correctPassword = await checkPassword(password, found.password);
+
+        if (correctPassword) {
+          res.redirect(found.destination);
+        } else {
+          res.status(403).json(makeError("UNAUTHORIZED", "Wrong password"));
+        }
       }
     }
   })
@@ -47,7 +55,7 @@ router.use(
         res.status(403).end();
       }
     } else {
-      res.status(404).end();
+      res.status(404).json(makeError("LINK NOT FOUND", `${link} is not an existing link`));
     }
   })
 );

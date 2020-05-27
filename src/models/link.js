@@ -2,21 +2,22 @@ const uuid = require("uuid").v4;
 const shortId = require("shortid");
 
 const txtDB = require("../db/txtDB");
+const { hashPassword } = require("../utils/password");
 
 function makeLink({ destination, author, password, expiry }) {
-  return {
+  return hashPassword(password).then((hash) => ({
     id: uuid(),
     author,
     link: shortId(),
     destination,
-    password,
+    password: hash,
     expiry,
     created: new Date().toISOString(),
-  };
+  }));
 }
 
-function addOne({ destination, author, password = null, expiry = null }) {
-  return txtDB.addOne(makeLink({ destination, author, password, expiry }));
+async function addOne({ destination, author, password = null, expiry = null }) {
+  return txtDB.addOne(await makeLink({ destination, author, password, expiry }));
 }
 
 function findOneByLink(link) {
