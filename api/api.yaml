@@ -146,6 +146,7 @@ components:
           description: 'The expiry date of the short link, if any'
           type: 'string'
           format: 'date-time'
+          nullable: true
         link:
           description: 'The short link'
           type: 'string'
