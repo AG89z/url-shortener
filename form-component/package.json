@@ -5,6 +5,7 @@
   "main": "dist/bundle.cjs.js",
   "module": "dist/bundle.esm.js",
   "sideEffects": true,
+  "private": true,
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "rollup -c"
@@ -29,5 +30,6 @@
   },
   "peerDependencies": {
     "react": ">16.12"
-  }
+  },
+  "files": ["dist"]
 }

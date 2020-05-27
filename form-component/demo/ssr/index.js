@@ -1,7 +1,7 @@
 const express = require("express");
 
 const React = require("react");
-const ReactDOM = require("react-dom/server");
+const ReactDOMServer = require("react-dom/server");
 
 const UrlShortenerForm = require("url-shortener-form");
 
@@ -9,7 +9,7 @@ const app = express();
 
 app.get("/", (req, res) => {
   const form = React.createElement(UrlShortenerForm);
-  const html = ReactDOM.renderToString(form);
+  const html = ReactDOMServer.renderToString(form);
 
   res.send(`
     <!DOCTYPE html>
