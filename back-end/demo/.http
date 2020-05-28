@@ -11,8 +11,8 @@ Content-Type: application/json
 Authorization: Bearer {{userOne}}
 
 {
-  "destination": "http://www.codeplastic.com/",
-  "expiry": "2021-05-30T20:51:53.380Z"
+  "destination": "https://wikipedia.org/",
+  "password": "secret"
 }
 
 ###
