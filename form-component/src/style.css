@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+
+.urlFormShortener {
+  background-color: #659dbd;
+  color: white;
+  border-radius: 8px;
+  width: 800px;
+  max-width: 100%;
+  text-align: center;
+  font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  margin: 24px;
+}
+
+#ufs-title {
+  margin-top: 16px;
+  font-size: xx-large;
+  margin-bottom: 8px;
+}
+
+#ufs-form {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+#ufs-url-area {
+  display: flex;
+  width: 80%;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#ufs-url-area input,
+#ufs-url-area button {
+  margin-top: 8px;
+  font-size: 16px;
+  padding: 10px 15px;
+}
+
+#ufs-url {
+  flex: auto;
+  min-width: 100px;
+}
+
+#ufs-submit {
+  flex: auto;
+  max-width: 100px;
+}
+
+#ufs-security-note {
+  margin-left: 4px;
+  margin-right: 4px;
+  margin: 12px;
+  width: 80%;
+}
+
+#ufs-security-note p {
+  text-align: justify;
+  font-size: small;
+}
+
+#ufs-password-expiry-area {
+  display: flex;
+  flex-wrap: wrap;
+  width: 80%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#ufs-password-expiry-area label {
+  flex: auto;
+  display: flex;
+  flex-flow: column;
+  align-items: baseline;
+  margin-bottom: 8px;
+}
+
+#ufs-password-expiry-area input {
+  margin-top: 8px;
+}
