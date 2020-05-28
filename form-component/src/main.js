@@ -97,7 +97,7 @@ function UrlShortenerForm({ jwt }) {
           )}
           <div id="ufs-security-note">
             <p>
-              Although very difficult, a malicious party could discover a short link and from there
+              ATTENTION: Although very difficult, a malicious party could discover a short link and from there
               get to the destination URL. If your URL contains sensible data, consider protecting it
               with a password and/or and expiry date.
             </p>

@@ -1,8 +1,7 @@
-cors ?
-README
 Improve error handling
 POST /test in development to generate JWTs
 PATCH and DELETE
 Make view for redirect errors
 Tests
 Clean architecture
+Security in API definition

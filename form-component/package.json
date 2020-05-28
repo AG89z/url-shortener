@@ -8,7 +8,7 @@
   "private": true,
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "rollup -c",
+    "build": "rollup -c && npm pack",
     "develop": "concurrently \"rollup -c -w \" \"serve\""
   },
   "keywords": [],
