@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import style from "./style.css";
 
-function UrlShortenerForm() {
+function UrlShortenerForm({ jwt }) {
   const urlInputRef = useRef();
 
   const [state, setState] = useState({
@@ -10,7 +10,9 @@ function UrlShortenerForm() {
     password: "",
   });
 
-  const [urlInputError, setUrlInputError] = useState(false);
+  const [error, setError] = useState(null);
+
+  const [shortLink, setShortLink] = useState(null);
 
   const setUrl = (url) => setState((prevState) => ({ ...prevState, url }));
   const setExpiry = (expiry) => setState((prevState) => ({ ...prevState, expiry }));
@@ -18,12 +20,37 @@ function UrlShortenerForm() {
 
   const isValidUrlInput = (input) => !input.validity.typeMismatch;
 
+  const urlError = "Enter a valid URL";
+
   const onSubmit = (e) => {
+    setShortLink(null);
     if (!isValidUrlInput(urlInputRef.current)) {
-      setUrlInputError(true);
+      setError(urlError);
     } else {
-      setUrlInputError(false);
-      console.log("POST");
+      setError(null);
+      fetch("http://localhost:5000/v0/links", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${jwt}`,
+        },
+        body: JSON.stringify({
+          destination: state.url,
+          expiry: (state.expiry && new Date(state.expiry).toISOString()) || null,
+          password: state.password || null,
+        }),
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          if (!res.error) {
+            setShortLink(res.link);
+          } else {
+            setError(res.message);
+          }
+        })
+        .catch((err) => {
+          setError(err.message || "UNEXPECTED ERROR");
+        });
     }
     e.preventDefault();
   };
@@ -45,16 +72,27 @@ function UrlShortenerForm() {
                 setUrl(e.target.value);
               }}
               onBlur={(e) => {
-                setUrlInputError(!isValidUrlInput(e.target));
+                setShortLink(null);
+                setError(!isValidUrlInput(e.target) ? urlError : null);
               }}
               required
               placeholder="URL"
             />
             <input id="ufs-submit" type="submit" />
           </div>
-          {urlInputError && (
+          {error && (
             <div className="ufs-error">
-              <p>Enter a valid URL</p>
+              <p>{error}</p>
+            </div>
+          )}
+          {shortLink && (
+            <div className="ufs-success">
+              <p>
+                Short link created:{"  "}
+                <a target="_blank" href={shortLink}>
+                  {shortLink}
+                </a>
+              </p>
             </div>
           )}
           <div id="ufs-security-note">

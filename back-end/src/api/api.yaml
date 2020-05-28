@@ -27,10 +27,12 @@ paths:
                   type: 'string'
                   format: 'date-time'
                   description: 'An optional expiry date for the validity of the short link'
+                  nullable: true
                 password:
                   type: 'string'
                   format: 'password'
                   description: 'An optional password to protect the link'
+                  nullable: true
       responses:
         '201':
           description: Created

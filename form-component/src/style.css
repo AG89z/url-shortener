@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap");
 
 .urlFormShortener {
   background-color: #659dbd;
@@ -7,7 +7,7 @@
   width: 800px;
   max-width: 100%;
   text-align: center;
-  font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+  font-family: "Open Sans", Arial, Helvetica, sans-serif;
   display: flex;
   flex-flow: column;
   justify-content: center;
@@ -49,12 +49,19 @@
   min-width: 100px;
 }
 
-.ufs-error {
-  color: red;
+.ufs-error,
+.ufs-success {
   font-weight: bold;
-  font-size: small;
-  text-align: left;
   width: 80%;
+  background-color: red;
+}
+
+.ufs-success {
+  background-color: #5cdb95;
+}
+
+.ufs-error p {
+  margin: 4px;
 }
 
 #ufs-submit {
