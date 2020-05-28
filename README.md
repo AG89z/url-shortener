@@ -1,5 +1,7 @@
 # URL Shortener service
 
+## Project and research
+
 ### Context 
 
 Our product allows the creation of advanced sales and marketing reports from a variety of sources and APIs.These reports and then shared with teams of the organization for strategy and decision making.
@@ -22,3 +24,13 @@ Taking all of this into account, in order to tackle the immediate needs of our c
 ### Final considerations and possible future development
 
 The reason why our customers decided not to use 3rd party shorteners is security. This is the focus of our solution. For this reason a feature that is popular on other shorteners (e.g. [Bitly](https://bitly.com/) or [Rebrandly](https://www.rebrandly.com/)) like custom short links should be left out as it could make the life easier to ill-intentioned that could use popular and common words in their scraping. At the same time a solution like content-preview of the linked URL becomes useless, since only link to our own product will be allowed. A feature that instead could be expanded in the future is analytics, with statistics viewable on the dashboard of our users on how the links are used.
+
+## Testing
+
+* First,  start the [back end](./back-end).
+
+```npm install npm start``` (see the related [README](./back-end/README.md) for details)
+
+* Then, test the React form component for the [front end](./form-component).
+
+```npm install npm start``` (see the related [README](./form-component/README.md) for details)
