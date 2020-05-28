@@ -1,6 +1,6 @@
 ## Url shortener form
 
-Emendable React component for retrieving short links from localhost:5000.
+Emendable React component for retrieving short links from localhost:5001.
 
 Takes a ```jwt``` in the props for authentication.
 

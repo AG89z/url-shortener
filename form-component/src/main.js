@@ -28,7 +28,7 @@ function UrlShortenerForm({ jwt }) {
       setError(urlError);
     } else {
       setError(null);
-      fetch("http://localhost:5000/v0/links", {
+      fetch("http://localhost:5001/v0/links", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

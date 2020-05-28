@@ -4,12 +4,11 @@
   "description": "",
   "main": "dist/bundle.cjs.js",
   "module": "dist/bundle.esm.js",
-  "sideEffects": true,
-  "private": true,
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "rollup -c && npm pack",
-    "develop": "concurrently \"rollup -c -w \" \"serve\""
+    "develop": "concurrently \"rollup -c -w \" \"serve\"",
+    "start": "npm run develop"
   },
   "keywords": [],
   "author": "",

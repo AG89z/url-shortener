@@ -2,11 +2,11 @@
 @userTwo = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJTdXBlckJ1c2luZXNzIiwiaWF0IjoxNTkwNTc5MzY3LCJleHAiOjI1MzcyNjQyOTMsImF1ZCI6Ind3dy5zdXBlcmJ1c2luZXNzLmNvbSIsInN1YiI6IkVtaWx5IFdhdHNvbiIsIk5hbWUiOiJFbWlseSIsIlN1cm5hbWUiOiJXYXRzb24iLCJpZCI6ImFjNGIxYXYwLTlkZGMtNDRhNy1hNmRjLTMyZTNkMmUyZGZiOCJ9.hgHt7EgMj1wYkpEKHqkOB0hj5aH6JhTQXDEM4DZ8bH8
 
 ###
-GET http://localhost:5000/v0/links
+GET http://localhost:5001/v0/links
 Authorization: Bearer {{userOne}}
 
 ###
-POST http://localhost:5000/v0/links
+POST http://localhost:5001/v0/links
 Content-Type: application/json
 Authorization: Bearer {{userOne}}
 
@@ -16,14 +16,14 @@ Authorization: Bearer {{userOne}}
 }
 
 ###
-GET http://localhost:5000/v0/links/f66e61df-5dd0-49d2-ad46-36e25d024a0e
+GET http://localhost:5001/v0/links/f66e61df-5dd0-49d2-ad46-36e25d024a0e
 Authorization: Bearer {{userOne}}
 
 ### Unauthorized user
-GET http://localhost:5000/v0/links/f66e61df-5dd0-49d2-ad46-36e25d024a0e
+GET http://localhost:5001/v0/links/f66e61df-5dd0-49d2-ad46-36e25d024a0e
 Authorization: Bearer {{userTwo}}
 
 
 ###
-GET http://localhost:5000/iwdRejArk
+GET http://localhost:5001/iwdRejArk
 
