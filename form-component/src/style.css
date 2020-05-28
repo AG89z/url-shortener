@@ -49,6 +49,14 @@
   min-width: 100px;
 }
 
+.ufs-error {
+  color: red;
+  font-weight: bold;
+  font-size: small;
+  text-align: left;
+  width: 80%;
+}
+
 #ufs-submit {
   flex: auto;
   max-width: 100px;
