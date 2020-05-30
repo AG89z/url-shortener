@@ -1,8 +1,8 @@
-const { Router } = require("express");
-const { lookup } = require("../services/links");
-const { wrapAsync } = require("../utils/wrapAync");
-const { checkPassword } = require("../utils/password");
-const makeError = require("../utils/makeError");
+import { Router } from "express";
+import { lookup } from "../services/links";
+import { wrapAsync } from "../utils/wrapAync";
+import { checkPassword } from "../utils/password";
+import makeError from "../utils/makeError";
 
 const router = Router();
 
@@ -20,7 +20,7 @@ router.post(
       if (!found) {
         res.status(404).json(makeError("LINK NOT FOUND", `${link} is not an existing link`));
       } else {
-        const correctPassword = await checkPassword(password, found.password);
+        const correctPassword = await checkPassword(password, found.password!);
 
         if (correctPassword) {
           res.redirect(found.destination);
@@ -45,14 +45,14 @@ router.use(
       const { expiry, password } = found;
 
       const expired = expiry && new Date() > new Date(expiry);
-      const protected = Boolean(password);
+      const isProtected = Boolean(password);
 
-      if (protected && !expired) {
-        res.render("../src/views/redirect", { link });
-      } else if (!protected && !expired) {
+      if (isProtected && !expired) {
+        res.render("../src/views/enterPassword", { link });
+      } else if (!isProtected && !expired) {
         res.redirect(found.destination);
       } else if (expired) {
-        res.status(403).end();
+        res.status(403).json(makeError("LINK EXPIRED", `The link ${link} is not longer valid`));
       }
     } else {
       res.status(404).json(makeError("LINK NOT FOUND", `${link} is not an existing link`));
@@ -60,4 +60,4 @@ router.use(
   })
 );
 
-module.exports = router;
+export = router;

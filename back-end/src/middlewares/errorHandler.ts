@@ -1,6 +1,8 @@
-const makeError = require('../utils/makeError')
+import { Request, Response, NextFunction } from "express";
 
-function errorHandler(err, req, res, next) {
+import makeError from "../utils/makeError";
+
+function errorHandler(err: any, req: Request, res: Response) {
   console.log(err);
   if (err.name === "UnauthorizedError") {
     res.status(401).json(makeError("UNAUTHORIZED", err.message));
@@ -11,4 +13,4 @@ function errorHandler(err, req, res, next) {
   }
 }
 
-module.exports = errorHandler;
+export = errorHandler;

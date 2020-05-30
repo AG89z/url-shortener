@@ -1,10 +1,10 @@
-const fs = require("fs");
-const path = require("path");
+import fs from "fs";
+import path from "path";
 
-const DB = path.join(__dirname, "__DB.txt");
+const DB = path.join(__dirname, "../../__DB.txt");
 
-function addOne(document) {
-  return new Promise((resolve, reject) => {
+function addOne<T>(document: T) {
+  return new Promise<T>((resolve, reject) => {
     fs.appendFile(DB, `${JSON.stringify(document)}\n`, (err) => {
       if (err) {
         reject(err);
@@ -15,8 +15,8 @@ function addOne(document) {
   });
 }
 
-function findOne(key, value) {
-  return new Promise((resolve, reject) => {
+function findOne<T>(key: string, value: string) {
+  return new Promise<T>((resolve, reject) => {
     fs.readFile(DB, (err, data) => {
       if (err) {
         reject(err);
@@ -32,8 +32,8 @@ function findOne(key, value) {
   });
 }
 
-function find(key = null, value = null) {
-  return new Promise((resolve, reject) => {
+function find<T>(key: string | null = null, value: string | null = null) {
+  return new Promise<T[]>((resolve, reject) => {
     fs.readFile(DB, (err, data) => {
       if (err) {
         reject(err);
@@ -50,7 +50,7 @@ function find(key = null, value = null) {
   });
 }
 
-module.exports = {
+export = {
   addOne,
   findOne,
   find,

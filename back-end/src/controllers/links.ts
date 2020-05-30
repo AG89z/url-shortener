@@ -1,16 +1,16 @@
-const { Router } = require("express");
+import { Router, Request } from "express";
 
-const LinksService = require("../services/links");
-const { wrapAsync } = require("../utils/wrapAync");
-const checkJwt = require("../middlewares/checkJwt");
-const makeError = require("../utils/makeError");
+import LinksService from "../services/links";
+import { wrapAsync } from "../utils/wrapAync";
+import {AuthenticatedRequest, checkJwt} from "../middlewares/checkJwt";
+import makeError from "../utils/makeError";
 
 const router = Router();
+
 router.post(
   "/v0/links",
-  // @ts-ignore
   checkJwt,
-  wrapAsync(async (req, res) => {
+  wrapAsync(async (req: AuthenticatedRequest, res) => {
     const { user } = req;
     const { destination, password, expiry } = req.body;
 
@@ -30,9 +30,8 @@ router.post(
 
 router.get(
   "/v0/links",
-  // @ts-ignore
   checkJwt,
-  wrapAsync(async (req, res) => {
+  wrapAsync(async (req: AuthenticatedRequest, res) => {
     const { user } = req;
 
     const links = (await LinksService.getAll()).filter((link) => link.author === user.id);
@@ -43,9 +42,8 @@ router.get(
 
 router.get(
   "/v0/links/:id",
-  // @ts-ignore
   checkJwt,
-  wrapAsync(async (req, res) => {
+  wrapAsync(async (req: AuthenticatedRequest, res) => {
     const { user } = req;
     const { id } = req.params;
 
@@ -83,4 +81,4 @@ router.get(
 //   })
 // );
 
-module.exports = router;
+export = router;

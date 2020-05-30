@@ -1,8 +1,12 @@
-const config = require('../config')
+import config from "../config";
 
-const LinkModel = require('../models/link')
+import LinkModel, { Link, LinkCreator } from "../models/link";
 
-function toResource(link) {
+interface LinkResource extends Link {
+  protected: boolean;
+}
+
+function toResource(link: Link): LinkResource {
   return {
     ...link,
     password: undefined,
@@ -14,17 +18,22 @@ function toResource(link) {
   };
 }
 
-async function createOne({ destination, author, expiry = null, password = null }) {
+export async function createOne({
+  destination,
+  author,
+  expiry = undefined,
+  password = undefined,
+}: LinkCreator) {
   const checkDestination = new RegExp(config.ALLOWED_DESTINATIONS);
 
-  if(checkDestination.test(destination)) {
+  if (checkDestination.test(destination)) {
     return toResource(await LinkModel.addOne({ destination, author, password, expiry }));
   } else {
-    return null
+    return null;
   }
 }
 
-async function getOne(id) {
+export async function getOne(id: string) {
   const link = await LinkModel.findOneById(id);
 
   if (link) {
@@ -34,19 +43,18 @@ async function getOne(id) {
   }
 }
 
-async function lookup(link) {
+export async function lookup(link: string) {
   const found = await LinkModel.findOneByLink(link);
 
-  if(found) {
+  if (found) {
     return found;
   } else {
     return null;
   }
 }
 
-async function getAll() {
+export async function getAll() {
   return (await LinkModel.getAll()).map(toResource);
 }
 
-
-module.exports = { createOne, getOne, getAll, lookup };
+export default { createOne, getOne, lookup, getAll };
