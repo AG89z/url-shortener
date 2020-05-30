@@ -2,7 +2,7 @@ import { Router, Request } from "express";
 
 import LinksService from "../services/links";
 import { wrapAsync } from "../utils/wrapAync";
-import {AuthenticatedRequest, checkJwt} from "../middlewares/checkJwt";
+import { AuthenticatedRequest, checkJwt } from "../middlewares/checkJwt";
 import makeError from "../utils/makeError";
 
 const router = Router();
@@ -14,7 +14,12 @@ router.post(
     const { user } = req;
     const { destination, password, expiry } = req.body;
 
-    const link = await LinksService.createOne({ destination, author: user.id, password, expiry });
+    const link = await LinksService.createOne({
+      destination,
+      author: user.id,
+      password,
+      expiry,
+    });
 
     if (link) {
       res.status(201).json(link);
@@ -22,7 +27,10 @@ router.post(
       res
         .status(400)
         .json(
-          makeError("BAD REQUEST", `You can't create a short link for the domain ${destination}`)
+          makeError(
+            "BAD REQUEST",
+            `You can't create a short link for the domain ${destination}`
+          )
         );
     }
   })
@@ -34,7 +42,9 @@ router.get(
   wrapAsync(async (req: AuthenticatedRequest, res) => {
     const { user } = req;
 
-    const links = (await LinksService.getAll()).filter((link) => link.author === user.id);
+    const links = (await LinksService.getAll()).filter(
+      (link) => link.author === user.id
+    );
 
     res.status(200).json(links);
   })
@@ -54,9 +64,15 @@ router.get(
     if (link && authorized) {
       res.status(200).json(link);
     } else if (link && !authorized) {
-      res.status(401).json(makeError("UNAUTHORIZED", "You are not authorized to view this link"));
+      res
+        .status(401)
+        .json(
+          makeError("UNAUTHORIZED", "You are not authorized to view this link")
+        );
     } else {
-      res.status(404).json(makeError("NOT FOUND", `No link found with id ${id}`));
+      res
+        .status(404)
+        .json(makeError("NOT FOUND", `No link found with id ${id}`));
     }
   })
 );

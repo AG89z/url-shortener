@@ -27,7 +27,9 @@ export async function createOne({
   const checkDestination = new RegExp(config.ALLOWED_DESTINATIONS);
 
   if (checkDestination.test(destination)) {
-    return toResource(await LinkModel.addOne({ destination, author, password, expiry }));
+    return toResource(
+      await LinkModel.addOne({ destination, author, password, expiry })
+    );
   } else {
     return null;
   }

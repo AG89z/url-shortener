@@ -1,7 +1,7 @@
 import { Request } from "express";
 import config from "../config";
 
-const jwt = require("express-jwt");
+import jwt from "express-jwt";
 
 export interface AuthenticatedRequest extends Request {
   user?: any;

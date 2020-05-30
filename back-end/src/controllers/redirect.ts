@@ -14,11 +14,15 @@ router.post(
     const { password, link } = req.body;
 
     if (!password || !link) {
-      res.status(400).json(makeError("BAD REQUEST", "Link or password missing"));
+      res
+        .status(400)
+        .json(makeError("BAD REQUEST", "Link or password missing"));
     } else {
       const found = await lookup(link);
       if (!found) {
-        res.status(404).json(makeError("LINK NOT FOUND", `${link} is not an existing link`));
+        res
+          .status(404)
+          .json(makeError("LINK NOT FOUND", `${link} is not an existing link`));
       } else {
         const correctPassword = await checkPassword(password, found.password!);
 
@@ -52,10 +56,16 @@ router.use(
       } else if (!isProtected && !expired) {
         res.redirect(found.destination);
       } else if (expired) {
-        res.status(403).json(makeError("LINK EXPIRED", `The link ${link} is not longer valid`));
+        res
+          .status(403)
+          .json(
+            makeError("LINK EXPIRED", `The link ${link} is not longer valid`)
+          );
       }
     } else {
-      res.status(404).json(makeError("LINK NOT FOUND", `${link} is not an existing link`));
+      res
+        .status(404)
+        .json(makeError("LINK NOT FOUND", `${link} is not an existing link`));
     }
   })
 );

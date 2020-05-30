@@ -21,7 +21,12 @@ export interface LinkCreator {
   expiry?: string;
 }
 
-async function makeLink({ destination, author, password, expiry }: LinkCreator): Promise<Link> {
+async function makeLink({
+  destination,
+  author,
+  password,
+  expiry,
+}: LinkCreator): Promise<Link> {
   let hash;
 
   if (password) {
@@ -45,7 +50,9 @@ async function addOne({
   password = undefined,
   expiry = undefined,
 }: LinkCreator) {
-  return txtDB.addOne(await makeLink({ destination, author, password, expiry }));
+  return txtDB.addOne(
+    await makeLink({ destination, author, password, expiry })
+  );
 }
 
 function findOneByLink(link: string) {
