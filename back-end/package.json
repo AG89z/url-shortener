@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "tsc && node dist/app.js",
+    "start": "tsc && pm2 start dist/app.js",
     "develop": "tsc-watch --onSuccess \"node dist/app.js\"",
     "validateApi": "npx swagger-cli validate api/api.yaml"
   },
@@ -21,6 +21,7 @@
     "@types/node": "^14.0.6",
     "@types/shortid": "0.0.29",
     "@types/uuid": "^8.0.0",
+    "pm2": "^4.4.0",
     "tsc-watch": "^4.2.8",
     "typescript": "^3.9.3"
   },
