@@ -1,4 +1,4 @@
-import { Router, Request } from "express";
+import { Router } from "express";
 
 import LinksService from "../services/links";
 import { wrapAsync } from "../utils/wrapAync";
