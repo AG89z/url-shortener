@@ -11,8 +11,8 @@ function toResource(link: Link): LinkResource {
     ...link,
     password: undefined,
     link:
-      config.NODE_ENV === "development"
-        ? `http://localhost:${config.PORT}/${link.link}`
+      config().NODE_ENV === "development"
+        ? `http://localhost:${config().PORT}/${link.link}`
         : `https://sh.nm/${link.link}`,
     protected: Boolean(link.password),
   };
@@ -23,8 +23,8 @@ export async function createOne({
   author,
   expiry = undefined,
   password = undefined,
-}: LinkCreator) {
-  const checkDestination = new RegExp(config.ALLOWED_DESTINATIONS);
+}: LinkCreator): Promise<LinkResource | null> {
+  const checkDestination = new RegExp(config().ALLOWED_DESTINATIONS);
 
   if (checkDestination.test(destination)) {
     return toResource(
@@ -35,17 +35,17 @@ export async function createOne({
   }
 }
 
-export async function getOne(id: string) {
+export async function getOne(id: string): Promise<LinkResource | undefined> {
   const link = await LinkModel.findOneById(id);
 
   if (link) {
     return toResource(link);
   } else {
-    return null;
+    return link;
   }
 }
 
-export async function lookup(link: string) {
+export async function lookup(link: string): Promise<Link | null> {
   const found = await LinkModel.findOneByLink(link);
 
   if (found) {
@@ -55,7 +55,7 @@ export async function lookup(link: string) {
   }
 }
 
-export async function getAll() {
+export async function getAll(): Promise<LinkResource[]> {
   return (await LinkModel.getAll()).map(toResource);
 }
 

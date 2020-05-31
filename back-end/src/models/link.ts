@@ -49,21 +49,21 @@ async function addOne({
   author,
   password = undefined,
   expiry = undefined,
-}: LinkCreator) {
+}: LinkCreator): Promise<Link> {
   return txtDB.addOne(
     await makeLink({ destination, author, password, expiry })
   );
 }
 
-function findOneByLink(link: string) {
+function findOneByLink(link: string): Promise<Link | undefined> {
   return txtDB.findOne<Link>("link", link);
 }
 
-function findOneById(id: string) {
+function findOneById(id: string): Promise<Link | undefined> {
   return txtDB.findOne<Link>("id", id);
 }
 
-function getAll() {
+function getAll(): Promise<Link[]> {
   return txtDB.find<Link>();
 }
 

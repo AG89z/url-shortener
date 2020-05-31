@@ -1,8 +1,9 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 
 import makeError from "../utils/makeError";
+import HttpError from "../utils/HttpError";
 
-function errorHandler(err: any, req: Request, res: Response) {
+function errorHandler(err: HttpError, req: Request, res: Response): void {
   console.log(err);
   if (err.name === "UnauthorizedError") {
     res.status(401).json(makeError("UNAUTHORIZED", err.message));

@@ -11,7 +11,7 @@ import cors from "cors";
 import morgan from "morgan";
 
 const API_SPEC = "api/api.yaml";
-const PORT = config.PORT;
+const PORT = config().PORT;
 
 const app = express();
 
@@ -43,4 +43,5 @@ new OpenApiValidator({
     app.listen(PORT, () => {
       console.log(`App listening on port http://localhost:${PORT}`);
     });
-  });
+  })
+  .catch(console.log);

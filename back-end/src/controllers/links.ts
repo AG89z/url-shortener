@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Router, Response } from "express";
 
 import LinksService from "../services/links";
 import { wrapAsync } from "../utils/wrapAync";
@@ -7,12 +7,25 @@ import makeError from "../utils/makeError";
 
 const router = Router();
 
+function userUndefinedError(res: Response) {
+  return res.status(500).json(makeError("SERVER ERROR", "No user defined"));
+}
+
 router.post(
   "/v0/links",
   checkJwt,
   wrapAsync(async (req: AuthenticatedRequest, res) => {
     const { user } = req;
-    const { destination, password, expiry } = req.body;
+
+    if (!user) {
+      return userUndefinedError(res);
+    }
+
+    const { destination, password, expiry } = req.body as {
+      destination: string;
+      password: string;
+      expiry: string;
+    };
 
     const link = await LinksService.createOne({
       destination,
@@ -22,9 +35,9 @@ router.post(
     });
 
     if (link) {
-      res.status(201).json(link);
+      return res.status(201).json(link);
     } else {
-      res
+      return res
         .status(400)
         .json(
           makeError(
@@ -42,11 +55,15 @@ router.get(
   wrapAsync(async (req: AuthenticatedRequest, res) => {
     const { user } = req;
 
+    if (!user) {
+      return userUndefinedError(res);
+    }
+
     const links = (await LinksService.getAll()).filter(
       (link) => link.author === user.id
     );
 
-    res.status(200).json(links);
+    return res.status(200).json(links);
   })
 );
 
@@ -55,6 +72,11 @@ router.get(
   checkJwt,
   wrapAsync(async (req: AuthenticatedRequest, res) => {
     const { user } = req;
+
+    if (!user) {
+      return userUndefinedError(res);
+    }
+
     const { id } = req.params;
 
     const link = await LinksService.getOne(id);
@@ -62,15 +84,15 @@ router.get(
     const authorized = link && link.author === user.id;
 
     if (link && authorized) {
-      res.status(200).json(link);
+      return res.status(200).json(link);
     } else if (link && !authorized) {
-      res
+      return res
         .status(401)
         .json(
           makeError("UNAUTHORIZED", "You are not authorized to view this link")
         );
     } else {
-      res
+      return res
         .status(404)
         .json(makeError("NOT FOUND", `No link found with id ${id}`));
     }

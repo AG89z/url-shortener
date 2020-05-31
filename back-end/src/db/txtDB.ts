@@ -3,8 +3,8 @@ import path from "path";
 
 const DB = path.join(__dirname, "../../__DB.txt");
 
-function addOne<T>(document: T) {
-  return new Promise<T>((resolve, reject) => {
+function addOne<T>(document: T): Promise<T> {
+  return new Promise((resolve, reject) => {
     fs.appendFile(DB, `${JSON.stringify(document)}\n`, (err) => {
       if (err) {
         reject(err);
@@ -15,8 +15,8 @@ function addOne<T>(document: T) {
   });
 }
 
-function findOne<T>(key: string, value: string) {
-  return new Promise<T>((resolve, reject) => {
+function findAll<T>(): Promise<T[]> {
+  return new Promise((resolve, reject) => {
     fs.readFile(DB, (err, data) => {
       if (err) {
         reject(err);
@@ -24,30 +24,28 @@ function findOne<T>(key: string, value: string) {
         const entries = data
           .toString()
           .split(/(?:\n)/g)
-          .map((s) => s && JSON.parse(s));
-        const found = entries.find((entry) => entry[key] === value);
-        resolve(found);
+          .reduce(
+            (res, s) => (s ? [...res, JSON.parse(s) as T] : res),
+            [] as T[]
+          );
+        resolve(entries);
       }
     });
   });
 }
 
-function find<T>(key: string | null = null, value: string | null = null) {
-  return new Promise<T[]>((resolve, reject) => {
-    fs.readFile(DB, (err, data) => {
-      if (err) {
-        reject(err);
-      } else {
-        const entries = data
-          .toString()
-          .split(/(?:\n)/g)
-          .map((s) => s && JSON.parse(s))
-          .filter((s) => Boolean(s) && (!key || s[key] === value));
+async function findOne<T>(
+  key: keyof T,
+  value: T[keyof T]
+): Promise<T | undefined> {
+  return (await findAll<T>()).find((entry) => entry[key] === value);
+}
 
-        resolve(entries);
-      }
-    });
-  });
+async function find<T>(
+  key: keyof T | undefined = undefined,
+  value: T[keyof T] | undefined = undefined
+): Promise<T[]> {
+  return (await findAll<T>()).filter((s) => !key || s[key] === value);
 }
 
 export = {
