@@ -1,6 +1,7 @@
 import { Router, Response } from "express";
 
-import LinksService from "../services/links";
+// import LinksService from "../services/links";
+import LinksService from "../use-cases";
 import { wrapAsync } from "../utils/wrapAync";
 import { AuthenticatedRequest, checkJwt } from "../middlewares/checkJwt";
 import makeError from "../utils/makeError";
@@ -27,7 +28,7 @@ router.post(
       expiry: string;
     };
 
-    const link = await LinksService.createOne({
+    const link = await LinksService.addLink({
       destination,
       author: user.id,
       password,
@@ -59,7 +60,7 @@ router.get(
       return userUndefinedError(res);
     }
 
-    const links = (await LinksService.getAll()).filter(
+    const links = (await LinksService.getAllLinks()).filter(
       (link) => link.author === user.id
     );
 
@@ -79,7 +80,7 @@ router.get(
 
     const { id } = req.params;
 
-    const link = await LinksService.getOne(id);
+    const link = await LinksService.getLink(id);
 
     const authorized = link && link.author === user.id;
 
