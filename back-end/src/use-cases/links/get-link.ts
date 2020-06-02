@@ -8,11 +8,14 @@ type DataAccess = {
 };
 
 function buildGetLink(dataAccess: DataAccess) {
-  return async function getLink(id: string): Promise<LinkResource | undefined> {
+  return async function getLink(
+    id: string,
+    asResource = true
+  ): Promise<LinkResource | Link | undefined> {
     const link = await dataAccess.findOneById(id);
 
     if (link) {
-      return toResource(link);
+      return asResource ? toResource(link) : link;
     } else {
       return undefined;
     }

@@ -128,7 +128,35 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/Link'
-                
+  /links/{id}/verify:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: The link UUID 
+        schema:
+          type: string
+    post:
+      summary: "Verify a protected link"
+      description: "Verify a protected link"
+      tags: ['Links']
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              type: "object"
+              required: ['password']
+              properties:
+                password:
+                  type: string
+                  format: password
+      responses:
+        '302':
+          description: "Redirect to the destination URL"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
           
     
 components:

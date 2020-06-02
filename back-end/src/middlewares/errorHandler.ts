@@ -4,7 +4,7 @@ import makeError from "../utils/makeError";
 import HttpError from "../utils/HttpError";
 
 function errorHandler(err: HttpError, req: Request, res: Response): void {
-  console.log(err);
+  console.log(err.stack);
   if (err.name === "UnauthorizedError") {
     res.status(401).json(makeError("UNAUTHORIZED", err.message));
   } else if (err.status < 500) {

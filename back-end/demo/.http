@@ -25,5 +25,12 @@ Authorization: Bearer {{userTwo}}
 
 
 ###
-GET http://localhost:5001/iwdRejArk
+GET http://localhost:5001/_sLFbQsSy
 
+###
+POST http://localhost:5001/v0/links/086b0d2b-89f8-4c16-b4a7-87a1276baf80/verify
+Content-Type: application/json
+
+{
+  "password": "secret"
+}
