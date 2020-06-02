@@ -3,13 +3,15 @@ import { LinkResource } from "./types";
 
 import toResource from "./to-resource";
 
-function buildLookupLink(db: {
+type DataAccess = {
   findOneByLink: (link: string) => Promise<Link | undefined>;
-}) {
+};
+
+function buildLookupLink(dataAccess: DataAccess) {
   return async function getLink(
     link: string
   ): Promise<LinkResource | undefined> {
-    const linkDoc = await db.findOneByLink(link);
+    const linkDoc = await dataAccess.findOneByLink(link);
 
     if (linkDoc) {
       return toResource(linkDoc);

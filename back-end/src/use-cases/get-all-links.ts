@@ -3,9 +3,13 @@ import { LinkResource } from "./types";
 
 import toResource from "./to-resource";
 
-function buildGetAllLinks(db: { findAll: () => Promise<Link[]> }) {
-  return async function getAllLinks(): Promise<LinkResource[]> {
-    return (await db.findAll()).map(toResource);
+type DataAccess = {
+  findAllByAuthor: (authorId: string) => Promise<Link[]>;
+};
+
+function buildGetAllLinks(dataAccess: DataAccess) {
+  return async function getAllLinks(authorId: string): Promise<LinkResource[]> {
+    return (await dataAccess.findAllByAuthor(authorId)).map(toResource);
   };
 }
 

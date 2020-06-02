@@ -14,8 +14,8 @@ async function findOneById(id: string): Promise<Link | undefined> {
   return textDB.findOne("id", id);
 }
 
-async function findAll(): Promise<Link[]> {
-  return textDB.find<Link>();
+async function findAllByAuthor(authorId: string): Promise<Link[]> {
+  return textDB.find<Link>("author", authorId);
 }
 
-export default { addOne, findOneByLink, findOneById, findAll };
+export default { addOne, findOneByLink, findOneById, findAllByAuthor };

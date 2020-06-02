@@ -5,7 +5,11 @@ import { LinkResource } from "./types";
 
 import toResource from "./to-resource";
 
-function buildAddLink(db: { addOne: (obj: Link) => Promise<Link> }) {
+type DataAccess = {
+  addOne: (obj: Link) => Promise<Link>;
+};
+
+function buildAddLink(dataAccess: DataAccess) {
   return async function addLink({
     destination,
     author,
@@ -16,7 +20,7 @@ function buildAddLink(db: { addOne: (obj: Link) => Promise<Link> }) {
 
     if (checkDestination.test(destination)) {
       return toResource(
-        await db.addOne(
+        await dataAccess.addOne(
           await makeLink({ destination, author, password, expiry })
         )
       );
