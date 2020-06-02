@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { lookup } from "../services/links";
+import { lookupLink } from "../use-cases";
 import { wrapAsync } from "../utils/wrapAync";
 import { checkPassword } from "../utils/password";
 import makeError from "../utils/makeError";
@@ -21,7 +21,7 @@ router.post(
         .status(400)
         .json(makeError("BAD REQUEST", "Link or password missing"));
     } else {
-      const found = await lookup(link);
+      const found = await lookupLink(link);
       if (!found) {
         return res
           .status(404)
@@ -52,7 +52,7 @@ router.use(
     if (!link) {
       res.status(400).json(makeError("NO LINK", "No link in the request"));
     } else {
-      const found = link && (await lookup(link));
+      const found = link && (await lookupLink(link));
 
       if (found) {
         const { expiry, password } = found;

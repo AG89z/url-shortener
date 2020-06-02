@@ -6,7 +6,7 @@ import { OpenApiValidator } from "express-openapi-validator";
 
 import linksController from "./controllers/links";
 import redirectController from "./controllers/redirect";
-import errorHandler from "./middlewares/errorHandler";
+import errorHandler from "./controllers/middlewares/errorHandler";
 import cors from "cors";
 import morgan from "morgan";
 

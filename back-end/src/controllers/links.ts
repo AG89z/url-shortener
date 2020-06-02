@@ -3,7 +3,7 @@ import { Router, Response } from "express";
 // import LinksService from "../services/links";
 import LinksService from "../use-cases";
 import { wrapAsync } from "../utils/wrapAync";
-import { AuthenticatedRequest, checkJwt } from "../middlewares/checkJwt";
+import { AuthenticatedRequest, checkJwt } from "./middlewares/checkJwt";
 import makeError from "../utils/makeError";
 
 const router = Router();
@@ -60,9 +60,7 @@ router.get(
       return userUndefinedError(res);
     }
 
-    const links = (await LinksService.getAllLinks()).filter(
-      (link) => link.author === user.id
-    );
+    const links = await LinksService.getAllLinks(user.id);
 
     return res.status(200).json(links);
   })

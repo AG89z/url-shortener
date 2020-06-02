@@ -1,6 +1,6 @@
 import config from "../config";
 
-import { Link } from "../models/link";
+import { Link } from "../link";
 import { LinkResource } from "./types";
 
 function toResource(link: Link): LinkResource {

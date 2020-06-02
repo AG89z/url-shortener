@@ -1,4 +1,4 @@
-import textDB from "../db/txtDB";
+import textDB from "../libs/txtDB";
 
 import { Link } from "../link";
 

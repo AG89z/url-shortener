@@ -1,4 +1,4 @@
-import { Link } from "../models/link";
+import { Link } from "../link";
 
 export interface LinkResource extends Link {
   password: undefined;
