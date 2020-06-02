@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 
 import { getLink } from "../../use-cases/links";
 
-import makeError from "../../errors/makeError";
 import { compareHash } from "../../libs/hash";
 
 type RequestBody = {
@@ -15,13 +14,17 @@ async function linksIdVerifyPOST(req: Request, res: Response) {
   const link = await getLink(id, false);
 
   if (!link) {
-    return res.status(404).json(makeError("LINK NOT FOUND", "Link not found"));
+    return res
+      .status(404)
+      .render("../src/views/error", { message: "Link not found" });
   }
 
   const { password } = req.body as RequestBody;
 
   if (!password) {
-    return res.status(400).json(makeError("BAD REQUEST", "Password required"));
+    return res
+      .status(400)
+      .render("../src/views/error", { message: "Password required" });
   } else {
     if (
       !link.password ||
@@ -29,7 +32,9 @@ async function linksIdVerifyPOST(req: Request, res: Response) {
     ) {
       return res.redirect(link.destination);
     } else {
-      return res.status(403).json(makeError("UNAUTHORIZED", "Wrong password"));
+      return res
+        .status(403)
+        .render("../src/views/error", { message: "Wrong password" });
     }
   }
 }

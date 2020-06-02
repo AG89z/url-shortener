@@ -14,7 +14,7 @@ const PORT = config().PORT;
 
 const app = express();
 
-app.use(morgan("combined"));
+app.use(morgan("tiny"));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

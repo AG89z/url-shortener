@@ -23,16 +23,14 @@ async function checkRedirect(req: Request, res: Response) {
       } else if (!isProtected && !expired) {
         res.redirect(found.destination);
       } else if (expired) {
-        res
-          .status(403)
-          .json(
-            makeError("LINK EXPIRED", `The link ${link} is not longer valid`)
-          );
+        res.status(403).render("../src/views/error", {
+          message: `The link ${link} is not longer valid`,
+        });
       }
     } else {
-      res
-        .status(404)
-        .json(makeError("LINK NOT FOUND", `${link} is not an existing link`));
+      res.status(404).render("../src/views/error", {
+        message: `${link} is not an existing link`,
+      });
     }
   }
 }

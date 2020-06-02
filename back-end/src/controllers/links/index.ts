@@ -19,6 +19,10 @@ router.get("/v0/links/:id", checkJwt, wrapAsync(linksIdGET));
 
 router.post("/v0/links/:id/verify", wrapAsync(linkIdVerifyPOST));
 
+router.get("/test", (req, res) => {
+  res.render("../src/views/error", { link: 123, linkId: 123 });
+});
+
 router.use("*", wrapAsync(checkRedirect));
 // router.get("/_sLFbQsSy", (req, res) => {
 //   console.log("All good");
