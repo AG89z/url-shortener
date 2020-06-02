@@ -1,7 +1,7 @@
-import config from "../config";
+import config from "../../config";
 
-import makeLink, { LinkCreator, Link } from "../link";
-import { LinkResource } from "./types";
+import makeLink, { LinkCreator, Link } from "../../entities/links";
+import { LinkResource } from "./interfaces";
 
 import toResource from "./to-resource";
 

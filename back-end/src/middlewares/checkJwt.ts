@@ -1,5 +1,5 @@
 import { Request } from "express";
-import config from "../../config";
+import config from "../config";
 
 import jwt from "express-jwt";
 

@@ -1,7 +1,7 @@
-import config from "../config";
+import config from "../../config";
 
-import { Link } from "../link";
-import { LinkResource } from "./types";
+import { Link } from "../../entities/links";
+import { LinkResource } from "./interfaces";
 
 function toResource(link: Link): LinkResource {
   return {

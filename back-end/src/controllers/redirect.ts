@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { lookupLink } from "../use-cases";
+import { lookupLink } from "../use-cases/links";
 import { wrapAsync } from "../utils/wrapAync";
-import { checkPassword } from "../utils/password";
+import { compareHash } from "../libs/hash";
 import makeError from "../utils/makeError";
 
 const router = Router();
@@ -22,6 +22,7 @@ router.post(
         .json(makeError("BAD REQUEST", "Link or password missing"));
     } else {
       const found = await lookupLink(link);
+
       if (!found) {
         return res
           .status(404)
@@ -29,7 +30,7 @@ router.post(
       } else {
         if (
           !found.password ||
-          (found.password && (await checkPassword(password, found.password)))
+          (found.password && (await compareHash(password, found.password)))
         ) {
           return res.redirect(found.destination);
         } else {

@@ -1,5 +1,5 @@
-import { Link } from "../link";
-import { LinkResource } from "./types";
+import { Link } from "../../entities/links";
+import { LinkResource } from "./interfaces";
 
 import toResource from "./to-resource";
 

@@ -1,4 +1,4 @@
-import { Link } from "../link";
+import { Link } from "../../entities/links";
 
 type DataAccess = {
   findOneByLink: (link: string) => Promise<Link | undefined>;

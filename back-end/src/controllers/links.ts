@@ -1,9 +1,9 @@
 import { Router, Response } from "express";
 
 // import LinksService from "../services/links";
-import LinksService from "../use-cases";
+import LinksService from "../use-cases/links";
 import { wrapAsync } from "../utils/wrapAync";
-import { AuthenticatedRequest, checkJwt } from "./middlewares/checkJwt";
+import { AuthenticatedRequest, checkJwt } from "../middlewares/checkJwt";
 import makeError from "../utils/makeError";
 
 const router = Router();

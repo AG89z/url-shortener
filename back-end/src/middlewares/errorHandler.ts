@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
-import makeError from "../../utils/makeError";
-import HttpError from "../../utils/HttpError";
+import makeError from "../utils/makeError";
+import HttpError from "../utils/HttpError";
 
 function errorHandler(err: HttpError, req: Request, res: Response): void {
   console.log(err);
