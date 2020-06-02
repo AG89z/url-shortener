@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { lookupLink } from "../../use-cases/links";
-import makeError from "../../utils/makeError";
+import makeError from "../../errors/makeError";
 
 async function checkRedirect(req: Request, res: Response) {
   const match = /\/(.+)\/?/.exec(req.baseUrl);

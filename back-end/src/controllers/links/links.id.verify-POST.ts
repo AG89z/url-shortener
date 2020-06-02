@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 
 import { getLink } from "../../use-cases/links";
 
-import makeError from "../../utils/makeError";
+import makeError from "../../errors/makeError";
 import { compareHash } from "../../libs/hash";
 
 type RequestBody = {

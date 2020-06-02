@@ -3,7 +3,7 @@ import { AuthenticatedRequest } from "../../middlewares/checkJwt";
 
 import LinksService from "../../use-cases/links";
 
-import makeError from "../../utils/makeError";
+import makeError from "../../errors/makeError";
 
 async function linksIdGET(req: AuthenticatedRequest, res: Response) {
   const { user } = req;

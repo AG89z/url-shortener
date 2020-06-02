@@ -3,12 +3,12 @@ import buildGetLink from "./get-link";
 import buildLookupLink from "./lookup-link";
 import buildGetAllLinks from "./get-all-links";
 
-import db from "../../data-access";
+import linksDataAccess from "../../data-access/links";
 
-export const addLink = buildAddLink(db);
-export const getLink = buildGetLink(db);
-export const lookupLink = buildLookupLink(db);
-export const getAllLinks = buildGetAllLinks(db);
+export const addLink = buildAddLink(linksDataAccess);
+export const getLink = buildGetLink(linksDataAccess);
+export const lookupLink = buildLookupLink(linksDataAccess);
+export const getAllLinks = buildGetAllLinks(linksDataAccess);
 
 export { LinkResource } from "./interfaces";
 

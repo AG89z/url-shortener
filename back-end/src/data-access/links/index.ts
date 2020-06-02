@@ -1,6 +1,6 @@
-import textDB from "../libs/txtDB";
+import textDB from "../../libs/txtDB";
 
-import { Link } from "../entities/links";
+import { Link } from "../../entities/links";
 
 async function addOne(link: Link): Promise<Link> {
   return textDB.addOne(link);

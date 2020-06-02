@@ -6,7 +6,7 @@ import linksIdGET from "./links.id-GET";
 import linkIdVerifyPOST from "./links.id.verify-POST";
 import checkRedirect from "./redirect";
 
-import { wrapAsync } from "../../utils/wrapAync";
+import { wrapAsync } from "../../libs/wrapAync";
 import { checkJwt } from "../../middlewares/checkJwt";
 
 const router = Router();

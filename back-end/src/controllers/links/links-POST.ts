@@ -3,7 +3,7 @@ import LinksService from "../../use-cases/links";
 
 import { AuthenticatedRequest } from "../../middlewares/checkJwt";
 
-import makeError from "../../utils/makeError";
+import makeError from "../../errors/makeError";
 
 type RequestBody = {
   destination: string;
