@@ -22,7 +22,7 @@
       <h3 class="text-muted text-center mt-5"><%= link %></h3>
       <p class="text-center lead mt-5 mb-4"><b>Protected link</b>: enter the password to proceed to the URL</p>
 
-      <form id="form" linkId=<%=linkId%> class="form-row align-items-center justify-content-center mt-4">
+      <form id="form" link=<%=link%> class="form-row align-items-center justify-content-center mt-4">
         <input style="display: none;" id="link" name="link" value=<%=link%> readonly/>
         <div class="col-auto mt-2">
           <input class="form-control mr-2" id="password" name="password" type="password" />
@@ -43,11 +43,11 @@
       var password = document.getElementById("password");
       var error = document.getElementById("error");
 
-      var verificationAPI = "/v0/links/" + form.getAttribute('linkId') + "/verify";
+      var verifyPassword = "/" + form.getAttribute('link') + "/verify-password";
 
       form.onsubmit = function(e) {
         e.preventDefault();
-        fetch(verificationAPI, {
+        fetch(verifyPassword, {
           method: 'POST',
           headers: {
           'Content-Type': 'application/json'
@@ -56,9 +56,8 @@
             password: password.value
           })
         }).then(function(res){
-          var status = res.status;
           res.json().then(function(json){
-            if(status === 200) {
+            if(res.ok) {
               window.location.replace(json.destination);
             } else {
               error.style.visibility = "visible";
@@ -66,7 +65,6 @@
             }
           });
         }).catch(function(err) {
-          console.log(err);
           error.style.visibility = "visible";
           error.innerText = "ERROR: " + err.message;
         });

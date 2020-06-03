@@ -130,44 +130,6 @@ paths:
     #         'application/json':
     #           schema:
     #             $ref: '#/components/schemas/Link'
-  /links/{id}/verify:
-    parameters:
-      - name: id
-        in: path
-        required: true
-        description: The link ID 
-        schema:
-          type: string
-    post:
-      summary: "Verify the password for a protected link"
-      description: "Verify the password for a protected link"
-      tags: ['Links']
-      requestBody:
-        content:
-          'application/json':
-            schema:
-              type: "object"
-              required: ['password']
-              properties:
-                password:
-                  type: string
-                  format: password
-      responses:
-        '200':
-          description: "Returns the destination URL"
-          content:
-            'application/json':
-              schema:
-                type: 'object'
-                properties:
-                  destination:
-                    type: string
-                    format: uri
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '404':
-          $ref: '#/components/responses/NotFound'
-          
     
 components:
   schemas:

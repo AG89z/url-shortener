@@ -13,7 +13,7 @@ async function gateway(req: Request, res: Response) {
     });
   }
 
-  const found = await lookupLink(link);
+  const found = await lookupLink(link, false);
 
   if (isError(found)) {
     return res.status(404).render("../src/views/error", {
@@ -35,7 +35,7 @@ async function gateway(req: Request, res: Response) {
   }
 
   if (isProtected && !expired) {
-    return res.render("../src/views/gateway", { link, linkId: found.id });
+    return res.render("../src/views/gateway", { link });
   }
 
   if (!isProtected && !expired) {
