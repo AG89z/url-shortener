@@ -143,7 +143,9 @@ components:
         author:
           description: 'The user ID of the creator of the link'
           type: 'string'
-          format: 'uuid'
+          oneOf:
+            - format: 'uuid'
+            - enum: ['anonymous']
         created:
           description: 'The creation date of the short link'
           type: 'string'

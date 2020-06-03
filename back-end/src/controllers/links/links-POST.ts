@@ -18,7 +18,7 @@ async function linksPOST(req: AuthenticatedRequest, res: Response) {
 
   const link = await LinksService.addLink({
     destination,
-    author: user!.id,
+    author: user?.id || "anonymous",
     password,
     expiry,
   });

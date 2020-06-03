@@ -11,4 +11,8 @@ export interface AuthenticatedRequest extends Request {
   };
 }
 
-export const checkJwt = jwt({ secret: config().JWT_SECRET });
+function checkJwt(credentialsRequired = true) {
+  return jwt({ secret: config().JWT_SECRET, credentialsRequired });
+}
+
+export default checkJwt;
