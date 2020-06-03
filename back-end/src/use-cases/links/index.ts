@@ -10,6 +10,6 @@ export const getLink = buildGetLink(linksDataAccess);
 export const lookupLink = buildLookupLink(linksDataAccess);
 export const getAllLinks = buildGetAllLinks(linksDataAccess);
 
-export { LinkResource } from "./interfaces";
+export { LinkResource, isError } from "./interfaces";
 
 export default { addLink, getLink, lookupLink, getAllLinks };

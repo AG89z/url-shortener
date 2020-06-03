@@ -1,7 +1,7 @@
 import config from "../../config";
 
 import makeLink, { LinkCreator, Link } from "../../entities/links";
-import { LinkResource } from "./interfaces";
+import { SoftError } from "./interfaces";
 
 import toResource from "./to-resource";
 
@@ -15,7 +15,7 @@ function buildAddLink(dataAccess: DataAccess) {
     author,
     expiry = undefined,
     password = undefined,
-  }: LinkCreator): Promise<LinkResource | null> {
+  }: LinkCreator) {
     const checkDestination = new RegExp(config().ALLOWED_DESTINATIONS);
 
     if (checkDestination.test(destination)) {
@@ -25,7 +25,11 @@ function buildAddLink(dataAccess: DataAccess) {
         )
       );
     } else {
-      return null;
+      const error: SoftError = {
+        type: "INVALID_DESTINATION",
+        message: `${destination} is not a valid destination`,
+      };
+      return error;
     }
   };
 }

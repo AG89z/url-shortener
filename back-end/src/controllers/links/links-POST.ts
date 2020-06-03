@@ -1,5 +1,5 @@
 import { Response } from "express";
-import LinksService from "../../use-cases/links";
+import LinksService, { isError } from "../../use-cases/links";
 
 import { AuthenticatedRequest } from "../../middlewares/checkJwt";
 
@@ -23,17 +23,10 @@ async function linksPOST(req: AuthenticatedRequest, res: Response) {
     expiry,
   });
 
-  if (link) {
-    return res.status(201).json(link);
+  if (isError(link)) {
+    return res.status(403).json(makeError(link.type, link.message));
   } else {
-    return res
-      .status(400)
-      .json(
-        makeError(
-          "BAD REQUEST",
-          `You can't create a short link for the domain ${destination}`
-        )
-      );
+    return res.status(201).json(link);
   }
 }
 

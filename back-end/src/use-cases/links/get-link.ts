@@ -1,5 +1,5 @@
 import { Link } from "../../entities/links";
-import { LinkResource } from "./interfaces";
+import { SoftError, LinkResource } from "./interfaces";
 
 import toResource from "./to-resource";
 
@@ -11,13 +11,17 @@ function buildGetLink(dataAccess: DataAccess) {
   return async function getLink(
     id: string,
     asResource = true
-  ): Promise<LinkResource | Link | undefined> {
+  ): Promise<Link | LinkResource | SoftError> {
     const link = await dataAccess.findOneById(id);
 
     if (link) {
       return asResource ? toResource(link) : link;
     } else {
-      return undefined;
+      const error: SoftError = {
+        type: "LINK_NOT_FOUND",
+        message: `The Id ${id} does not match any existing link`,
+      };
+      return error;
     }
   };
 }

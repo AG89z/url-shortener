@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import { getLink } from "../../use-cases/links";
+import { getLink, isError } from "../../use-cases/links";
 
 import { compareHash } from "../../libs/hash";
 import makeError from "../../errors/makeError";
@@ -14,14 +14,14 @@ async function linksIdVerifyPOST(req: Request, res: Response) {
 
   const link = await getLink(id, false);
 
-  if (!link) {
-    return res.status(404).json(makeError("LINK NOT FOUND", "Link not found"));
+  if (isError(link)) {
+    return res.status(404).json(makeError(link.type, link.message));
   }
 
   const { password } = req.body as RequestBody;
 
   if (!password) {
-    return res.status(400).json(makeError("NO PASSWORD", "Password required"));
+    return res.status(400).json(makeError("NO_PASSWORD", "Password required"));
   } else {
     if (
       !link.password ||
@@ -31,7 +31,7 @@ async function linksIdVerifyPOST(req: Request, res: Response) {
     } else {
       return res
         .status(403)
-        .json(makeError("WRONG PASSWORD", "Wrong password"));
+        .json(makeError("WRONG_PASSWORD", "Wrong password"));
     }
   }
 }
