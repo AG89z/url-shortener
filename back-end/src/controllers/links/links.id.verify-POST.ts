@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import { getLink } from "../../use-cases/links";
 
 import { compareHash } from "../../libs/hash";
+import makeError from "../../errors/makeError";
 
 type RequestBody = {
   password: string;
@@ -14,27 +15,23 @@ async function linksIdVerifyPOST(req: Request, res: Response) {
   const link = await getLink(id, false);
 
   if (!link) {
-    return res
-      .status(404)
-      .render("../src/views/error", { message: "Link not found" });
+    return res.status(404).json(makeError("LINK NOT FOUND", "Link not found"));
   }
 
   const { password } = req.body as RequestBody;
 
   if (!password) {
-    return res
-      .status(400)
-      .render("../src/views/error", { message: "Password required" });
+    return res.status(400).json(makeError("NO PASSWORD", "Password required"));
   } else {
     if (
       !link.password ||
       (link.password && (await compareHash(password, link.password)))
     ) {
-      return res.redirect(link.destination);
+      return res.status(200).json({ destination: link.destination });
     } else {
       return res
         .status(403)
-        .render("../src/views/error", { message: "Wrong password" });
+        .json(makeError("WRONG PASSWORD", "Wrong password"));
     }
   }
 }

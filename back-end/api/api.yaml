@@ -66,7 +66,7 @@ paths:
       - name: id
         in: path
         required: true
-        description: The link UUID 
+        description: The link ID
         schema:
           type: string
     get:
@@ -82,67 +82,69 @@ paths:
                 $ref: '#/components/schemas/Link'
         '401':
           $ref: '#/components/responses/Unauthorized'
-    patch:
-      summary: Update one of the created links
-      description: Update one of the created links
-      tags: ['Links']
-      requestBody:
-        content:
-          'application/json':
-            schema:
-              type: 'object'
-              properties:
-                destination:
-                  description: 'Update the destination URL'
-                  type: 'string'
-                  format: 'uri'
-                expiry:
-                  description: 'Update the expiry date of the link'
-                  type: 'string'
-                  format: 'date-time'
-                password:
-                  description: >-
-                    Update or add a password to the link. If it's an update, the previousPassword field is mandatory
-                  type: 'string'
-                  format: 'password'
-                previousPassword:
-                  description: 'Required only if updating the password'
-                  type: 'string'
-                  format: 'password'
-      responses:
-        '200':
-          description: 'OK'
-          content:
-            'application/json':
-              schema:
-                $ref: '#/components/schemas/Link'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    # patch:
+    #   summary: Update one of the created links
+    #   description: Update one of the created links
+    #   tags: ['Links']
+    #   requestBody:
+    #     content:
+    #       'application/json':
+    #         schema:
+    #           type: 'object'
+    #           properties:
+    #             destination:
+    #               description: 'Update the destination URL'
+    #               type: 'string'
+    #               format: 'uri'
+    #             expiry:
+    #               description: 'Update the expiry date of the link'
+    #               type: 'string'
+    #               format: 'date-time'
+    #             password:
+    #               description: >-
+    #                 Update or add a password to the link. If it's an update, the previousPassword field is mandatory
+    #               type: 'string'
+    #               format: 'password'
+    #             previousPassword:
+    #               description: 'Required only if updating the password'
+    #               type: 'string'
+    #               format: 'password'
+    #   responses:
+    #     '200':
+    #       description: 'OK'
+    #       content:
+    #         'application/json':
+    #           schema:
+    #             $ref: '#/components/schemas/Link'
                 
-    delete:
-      summary: "Delete an existing link"
-      description: "Delete an existing link"
-      tags: ['Links']
-      responses:
-        '200':
-          description: 'OK. Returns the deleted link'
-          content:
-            'application/json':
-              schema:
-                $ref: '#/components/schemas/Link'
+    # delete:
+    #   summary: "Delete an existing link"
+    #   description: "Delete an existing link"
+    #   tags: ['Links']
+    #   responses:
+    #     '200':
+    #       description: 'OK. Returns the deleted link'
+    #       content:
+    #         'application/json':
+    #           schema:
+    #             $ref: '#/components/schemas/Link'
   /links/{id}/verify:
     parameters:
       - name: id
         in: path
         required: true
-        description: The link UUID 
+        description: The link ID 
         schema:
           type: string
     post:
-      summary: "Verify a protected link"
-      description: "Verify a protected link"
+      summary: "Verify the password for a protected link"
+      description: "Verify the password for a protected link"
       tags: ['Links']
       requestBody:
         content:
-          'application/x-www-form-urlencoded':
+          'application/json':
             schema:
               type: "object"
               required: ['password']
@@ -151,12 +153,20 @@ paths:
                   type: string
                   format: password
       responses:
-        '302':
-          description: "Redirect to the destination URL"
+        '200':
+          description: "Returns the destination URL"
+          content:
+            'application/json':
+              schema:
+                type: 'object'
+                properties:
+                  destination:
+                    type: string
+                    format: uri
         '400':
           $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
           
     
 components:
@@ -173,7 +183,7 @@ components:
           type: 'string'
           format: 'uuid'
         created:
-          description: 'The createion date of the short link'
+          description: 'The creation date of the short link'
           type: 'string'
           format: 'date-time'
         expiry:
@@ -192,14 +202,14 @@ components:
         protected:
           description: 'Whether or not the link is password protected'
           type: 'boolean'
-        statistics:
-          description: 'Insights about the link usage'
-          type: 'object'
-          properties:
-            clicks:
-              description: 'How many time the link has been clicked'
-              type: 'number'
-              format: 'int64'
+        # statistics:
+        #   description: 'Insights about the link usage'
+        #   type: 'object'
+        #   properties:
+        #     clicks:
+        #       description: 'How many time the link has been clicked'
+        #       type: 'number'
+        #       format: 'int64'
 
     Error:
       type: "object"
@@ -217,6 +227,12 @@ components:
             $ref: '#/components/schemas/Error'
     Unauthorized:
       description: 'Unauthorized'
+      content:
+        'application/json':
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: 'Not found'
       content:
         'application/json':
           schema:

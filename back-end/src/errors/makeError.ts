@@ -8,4 +8,4 @@ function makeError(
   };
 }
 
-export = makeError;
+export default makeError;

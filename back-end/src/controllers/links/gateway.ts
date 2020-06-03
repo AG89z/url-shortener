@@ -1,14 +1,16 @@
 import { Request, Response } from "express";
 import { lookupLink } from "../../use-cases/links";
-import makeError from "../../errors/makeError";
 
-async function checkRedirect(req: Request, res: Response) {
+async function gateway(req: Request, res: Response) {
   const match = /\/(.+)\/?/.exec(req.baseUrl);
 
   const link = match && match[1];
 
   if (!link) {
-    res.status(400).json(makeError("NO LINK", "No link in the request"));
+    res.status(400).render("../src/views/error", {
+      message: "No link in the request",
+      status: 400,
+    });
   } else {
     const found = await lookupLink(link);
 
@@ -19,20 +21,22 @@ async function checkRedirect(req: Request, res: Response) {
       const isProtected = Boolean(password);
 
       if (isProtected && !expired) {
-        res.render("../src/views/verifyRedirect", { link, linkId: found.id });
+        res.render("../src/views/gateway", { link, linkId: found.id });
       } else if (!isProtected && !expired) {
         res.redirect(found.destination);
       } else if (expired) {
         res.status(403).render("../src/views/error", {
-          message: `The link ${link} is not longer valid`,
+          message: `The link ${link} is expired`,
+          status: 403,
         });
       }
     } else {
       res.status(404).render("../src/views/error", {
         message: `${link} is not an existing link`,
+        status: 404,
       });
     }
   }
 }
 
-export default checkRedirect;
+export default gateway;

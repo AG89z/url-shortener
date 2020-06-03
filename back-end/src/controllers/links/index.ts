@@ -4,7 +4,7 @@ import linksGET from "./links-GET";
 import linksPOST from "./links-POST";
 import linksIdGET from "./links.id-GET";
 import linkIdVerifyPOST from "./links.id.verify-POST";
-import checkRedirect from "./redirect";
+import gateway from "./gateway";
 
 import { wrapAsync } from "../../libs/wrapAync";
 import { checkJwt } from "../../middlewares/checkJwt";
@@ -18,16 +18,6 @@ router.get("/v0/links", checkJwt, wrapAsync(linksGET));
 router.get("/v0/links/:id", checkJwt, wrapAsync(linksIdGET));
 
 router.post("/v0/links/:id/verify", wrapAsync(linkIdVerifyPOST));
-
-router.get("/test", (req, res) => {
-  res.render("../src/views/error", { link: 123, linkId: 123 });
-});
-
-router.use("*", wrapAsync(checkRedirect));
-// router.get("/_sLFbQsSy", (req, res) => {
-//   console.log("All good");
-//   // res.status(200).end();
-// });
 
 //TODO
 // router.patch(
@@ -48,5 +38,7 @@ router.use("*", wrapAsync(checkRedirect));
 //     res.status(200).end();
 //   })
 // );
+
+router.use("*", wrapAsync(gateway));
 
 export = router;

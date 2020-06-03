@@ -22,7 +22,7 @@
       <h3 class="text-muted text-center mt-5"><%= link %></h3>
       <p class="text-center lead mt-5 mb-4"><b>Protected link</b>: enter the password to proceed to the URL</p>
 
-      <form action="/v0/links/<%=linkId%>/verify" method="POST" class="form-row align-items-center justify-content-center mt-4">
+      <form id="form" linkId=<%=linkId%> class="form-row align-items-center justify-content-center mt-4">
         <input style="display: none;" id="link" name="link" value=<%=link%> readonly/>
         <div class="col-auto mt-2">
           <input class="form-control mr-2" id="password" name="password" type="password" />
@@ -31,6 +31,43 @@
           <button class="btn btn-primary" type="submit">Submit</button> 
         </div>
       </form>
+
+      <div class="d-flex justify-content-center">
+        <div id="error" class="alert alert-danger text-center mt-4" style="max-width: 600px; visibility: hidden;" role="alert">
+        </div>
+      </div>
     </div>
+
+    <script>
+      var form = document.getElementById("form");
+      var password = document.getElementById("password");
+      var error = document.getElementById("error");
+
+      var verificationAPI = "/v0/links/" + form.getAttribute('linkId') + "/verify";
+
+      form.onsubmit = function(e) {
+        e.preventDefault();
+        fetch(verificationAPI, {
+          method: 'POST',
+          headers: {
+          'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            password: password.value
+          })
+        }).then(function(res){
+          var status = res.status;
+          res.json().then(function(json){
+            if(status === 200) {
+              window.location.replace(json.destination);
+            } else {
+              error.style.visibility = "visible";
+              error.innerText = json.message;
+            }
+          });
+        });
+      };
+    </script>
   </body>
+
 </html>
