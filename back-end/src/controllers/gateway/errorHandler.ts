@@ -1,7 +1,5 @@
 import { Request, Response, NextFunction } from "express";
 
-import makeError from "./utils/make-error";
-
 function logError(err: Error) {
   console.log(err);
 }
@@ -15,13 +13,10 @@ function errorHandler(
 ) {
   logError(err);
 
-  if (err.name === "UnauthorizedError") {
-    return res.status(401).json(makeError("UNAUTHORIZED", err.message));
-  }
-
-  return res
-    .status(500)
-    .json(makeError("SERVER_ERROR", "Unexpected server error"));
+  return res.status(500).render("../src/views/error", {
+    status: 500,
+    message: "Unexpected server error",
+  });
 }
 
-export default errorHandler;
+export = errorHandler;

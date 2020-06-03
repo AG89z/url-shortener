@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import { getLink, isError } from "../../use-cases/links";
 
 import { compareHash } from "../../libs/hash";
-import makeError from "../../errors/makeError";
+import makeError from "./utils/make-error";
 
 type RequestBody = {
   password: string;

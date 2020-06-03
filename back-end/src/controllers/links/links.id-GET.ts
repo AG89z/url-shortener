@@ -1,9 +1,9 @@
 import { Response } from "express";
-import { AuthenticatedRequest } from "../../middlewares/checkJwt";
+import { AuthenticatedRequest } from "../../libs/checkJwt";
 
 import LinksService, { isError } from "../../use-cases/links";
 
-import makeError from "../../errors/makeError";
+import makeError from "./utils/make-error";
 
 async function linksIdGET(req: AuthenticatedRequest, res: Response) {
   const { user } = req;

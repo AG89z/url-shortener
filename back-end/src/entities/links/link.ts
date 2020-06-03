@@ -17,6 +17,8 @@ function buildMakeLink(
       hashedPassword = await hash(password);
     }
 
+    //TODO has destination
+
     return Object.freeze({
       id: makeId(),
       author,

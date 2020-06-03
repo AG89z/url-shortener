@@ -4,9 +4,10 @@ import linksGET from "./links-GET";
 import linksPOST from "./links-POST";
 import linksIdGET from "./links.id-GET";
 import linkIdVerifyPOST from "./links.id.verify-POST";
+import errorHandler from "./errorHandler";
 
 import { wrapAsync } from "../../libs/wrapAync";
-import { checkJwt } from "../../middlewares/checkJwt";
+import { checkJwt } from "../../libs/checkJwt";
 
 const router = Router();
 
@@ -37,5 +38,7 @@ router.post("/v0/links/:id/verify", wrapAsync(linkIdVerifyPOST));
 //     res.status(200).end();
 //   })
 // );
+
+router.use(errorHandler);
 
 export default router;

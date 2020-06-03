@@ -1,7 +1,7 @@
 import { Link } from "../../entities/links";
 import { LinkResource } from "./interfaces";
 
-import toResource from "./to-resource";
+import toResource from "./utils/to-resource";
 
 type DataAccess = {
   findAllByAuthor: (authorId: string) => Promise<Link[]>;

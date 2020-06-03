@@ -1,9 +1,9 @@
 import { Response } from "express";
 import LinksService, { isError } from "../../use-cases/links";
 
-import { AuthenticatedRequest } from "../../middlewares/checkJwt";
+import { AuthenticatedRequest } from "../../libs/checkJwt";
 
-import makeError from "../../errors/makeError";
+import makeError from "./utils/make-error";
 
 type RequestBody = {
   destination: string;

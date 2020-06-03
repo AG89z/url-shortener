@@ -3,7 +3,7 @@ import config from "../../config";
 import makeLink, { LinkCreator, Link } from "../../entities/links";
 import { SoftError } from "./interfaces";
 
-import toResource from "./to-resource";
+import toResource from "./utils/to-resource";
 
 type DataAccess = {
   addOne: (obj: Link) => Promise<Link>;

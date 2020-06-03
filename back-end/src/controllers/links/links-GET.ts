@@ -1,5 +1,5 @@
 import { Response } from "express";
-import { AuthenticatedRequest } from "../../middlewares/checkJwt";
+import { AuthenticatedRequest } from "../../libs/checkJwt";
 
 import LinksService from "../../use-cases/links";
 
