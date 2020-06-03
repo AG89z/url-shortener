@@ -1,7 +1,7 @@
 import { Response } from "express";
 import { AuthenticatedRequest } from "../../libs/checkJwt";
 
-import LinksService, { isError } from "../../use-cases/links";
+import LinksService, { isError } from "../../services/links";
 
 import makeError from "./utils/make-error";
 

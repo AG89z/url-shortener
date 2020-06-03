@@ -11,6 +11,14 @@ function buildMakeLink(
     password,
     expiry,
   }: LinkCreator): Promise<Readonly<Link>> {
+    if (!destination) {
+      throw new Error("Make link: missing destination");
+    }
+
+    if (!author) {
+      throw new Error("Make link: missing author");
+    }
+
     let hashedPassword;
 
     if (password) {

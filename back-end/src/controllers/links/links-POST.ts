@@ -1,5 +1,5 @@
 import { Response } from "express";
-import LinksService, { isError } from "../../use-cases/links";
+import LinksService, { isError } from "../../services/links";
 
 import { AuthenticatedRequest } from "../../libs/checkJwt";
 

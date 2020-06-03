@@ -3,6 +3,7 @@ import { Request, Response, NextFunction } from "express";
 import makeError from "./utils/make-error";
 
 function logError(err: Error) {
+  console.log("Error caught by the links router handler:");
   console.log(err);
 }
 

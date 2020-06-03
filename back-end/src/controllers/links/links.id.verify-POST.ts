@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import { getLink, isError } from "../../use-cases/links";
+import { getLink, isError } from "../../services/links";
 
 import { compareHash } from "../../libs/hash";
 import makeError from "./utils/make-error";

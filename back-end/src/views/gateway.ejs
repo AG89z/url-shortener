@@ -65,6 +65,10 @@
               error.innerText = json.message;
             }
           });
+        }).catch(function(err) {
+          console.log(err);
+          error.style.visibility = "visible";
+          error.innerText = "ERROR: " + err.message;
         });
       };
     </script>

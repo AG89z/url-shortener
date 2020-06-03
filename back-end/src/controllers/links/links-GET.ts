@@ -1,7 +1,7 @@
 import { Response } from "express";
 import { AuthenticatedRequest } from "../../libs/checkJwt";
 
-import LinksService from "../../use-cases/links";
+import LinksService from "../../services/links";
 
 async function linksGET(req: AuthenticatedRequest, res: Response) {
   const { user } = req;

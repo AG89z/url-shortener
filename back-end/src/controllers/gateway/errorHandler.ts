@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 
 function logError(err: Error) {
+  console.log("Error caught by the gateway router handler:");
   console.log(err);
 }
 
@@ -19,4 +20,4 @@ function errorHandler(
   });
 }
 
-export = errorHandler;
+export default errorHandler;

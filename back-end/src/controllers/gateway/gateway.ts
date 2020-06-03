@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { lookupLink, isError } from "../../use-cases/links";
+import { lookupLink, isError } from "../../services/links";
 
 async function gateway(req: Request, res: Response) {
   const match = /\/(.+)\/?/.exec(req.baseUrl);
