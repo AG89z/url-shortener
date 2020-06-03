@@ -17,27 +17,44 @@
     />
   </head>
   <body class="d-flex align-items-center justify-content-center vh-100">
-    <div class="d-flex flex-column justify-content-center align-items-center mt-4 mb-4 w-100" style="max-width: 800px;">
+    <div
+      class="d-flex flex-column justify-content-center align-items-center m-4 mt-4 mb-4 w-100"
+      style="max-width: 800px;"
+    >
       <h1 class="display-4 text-center">URL shortener</h1>
       <p class="text-center lead mt-5">Enter a URL</p>
 
       <form id="form" class="form-row justify-content-center w-100" novalidate>
         <div class="col-10 mt-2">
-          <input class="form-control mr-2" id="destination" name="destination" type="url" required/>
+          <input
+            class="form-control mr-2"
+            id="destination"
+            name="destination"
+            type="url"
+            required
+          />
           <div class="invalid-feedback">
             Please enter a valid url
           </div>
         </div>
         <div class="col-auto mt-2">
-          <button class="btn btn-primary" type="submit">Shorten</button> 
+          <button class="btn btn-primary" type="submit">Shorten</button>
         </div>
       </form>
 
-      <div class="position-relative d-flex justify-content-center mt-5 w-100">
-        <div id="success" class="alert alert-success p-2 pl-4 pr-4 position-absolute w-auto" style="visibility: hidden;">
+      <div class="position-relative mt-4 w-100">
+        <div
+          id="success"
+          class="alert alert-success p-2 pl-4 pr-4 position-absolute mw-100 m-auto"
+          style="visibility: hidden; width: fit-content; left: 0; right: 0;"
+        >
           <a id="shortLink" class="stretched-link h6" target="_blank"></a>
         </div>
-        <div id="error" class="alert alert-danger p-2 pl-4 pr-4 text-center w-auto position-absolute" style="visibility: hidden;"></div>
+        <div
+          id="error"
+          class="alert alert-danger p-2 pl-4 pr-4 position-absolute mw-100 m-auto"
+          style="visibility: hidden; width: fit-content; left: 0; right: 0;"
+        ></div>
       </div>
     </div>
 
@@ -46,34 +63,32 @@
       var input = document.getElementById("destination");
       var error = document.getElementById("error");
       var success = document.getElementById("success");
-      var shortLink = document.getElementById("shortLink")
+      var shortLink = document.getElementById("shortLink");
 
-      input.oninput = function(){
+      input.oninput = function () {
         form.classList.remove("was-validated");
         success.style.visibility = "hidden";
         error.style.visibility = "hidden";
-      }
+      };
 
-      form.onsubmit = function(e){
+      form.onsubmit = function (e) {
         e.preventDefault();
         form.classList.add("was-validated");
-        if(true || form.checkValidity()){
+        if (form.checkValidity()) {
           fetch("/v0/links", {
             method: "POST",
             headers: {
-              "Content-Type": "application/json"
+              "Content-Type": "application/json",
             },
             body: JSON.stringify({
               destination: input.value,
-            })
-          })
-          .then(function(res){
-            res.json()
-            .then(function(json){
-              if(res.ok){
+            }),
+          }).then(function (res) {
+            res.json().then(function (json) {
+              if (res.ok) {
                 success.style.visibility = "visible";
                 shortLink.innerText = json.link;
-                shortLink.setAttribute("href", json.link)
+                shortLink.setAttribute("href", json.link);
               } else {
                 error.style.visibility = "visible";
                 error.innerText = json.message;
@@ -81,8 +96,7 @@
             });
           });
         }
-      }
+      };
     </script>
   </body>
-
 </html>
