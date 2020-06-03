@@ -5,6 +5,8 @@ import bodyParser from "body-parser";
 import { OpenApiValidator } from "express-openapi-validator";
 
 import linksController from "./controllers/links";
+import linksGatewayController from "./controllers/gateway";
+
 import errorHandler from "./middlewares/errorHandler";
 import cors from "cors";
 import morgan from "morgan";
@@ -37,6 +39,7 @@ new OpenApiValidator({
   .install(app)
   .then(() => {
     app.use(linksController);
+    app.use(linksGatewayController);
     app.use(errorHandler);
     app.listen(PORT, () => {
       console.log(`App listening on port http://localhost:${PORT}`);

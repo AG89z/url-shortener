@@ -4,7 +4,6 @@ import linksGET from "./links-GET";
 import linksPOST from "./links-POST";
 import linksIdGET from "./links.id-GET";
 import linkIdVerifyPOST from "./links.id.verify-POST";
-import gateway from "./gateway";
 
 import { wrapAsync } from "../../libs/wrapAync";
 import { checkJwt } from "../../middlewares/checkJwt";
@@ -39,6 +38,4 @@ router.post("/v0/links/:id/verify", wrapAsync(linkIdVerifyPOST));
 //   })
 // );
 
-router.use("*", wrapAsync(gateway));
-
-export = router;
+export default router;
