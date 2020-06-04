@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>URL shortener - Protected link</title>
+    <meta
+      name="description"
+      content="URL shortener - Provide the password for the protected link"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body style="display: flex; align-items: center; height: 100vh;">
+    <div class="container mt-4 mb-4">
+      <h1 class="display-4 text-center">URL shortener</h1>
+      <h3 class="text-muted text-center mt-5"><%= link %></h3>
+      <p class="text-center lead mt-5 mb-4"><b>Protected link</b>: enter the password to proceed to the URL</p>
+
+      <form id="form" link=<%=link%> class="form-row align-items-center justify-content-center mt-4">
+        <div class="col-auto mt-2">
+          <input class="form-control mr-2" id="password" name="password" type="password" />
+        </div>
+        <div class="col-auto mt-2">
+          <button class="btn btn-primary" type="submit">Submit</button> 
+        </div>
+      </form>
+
+      <div class="d-flex justify-content-center">
+        <div id="error" class="alert alert-danger text-center mt-4" style="max-width: 600px; visibility: hidden;" role="alert">
+        </div>
+      </div>
+    </div>
+
+    <script>
+      var form = document.getElementById("form");
+      var password = document.getElementById("password");
+      var error = document.getElementById("error");
+
+      var verifyPassword = "/" + form.getAttribute('link') + "/verify-password";
+
+      form.onsubmit = function(e) {
+        e.preventDefault();
+        fetch(verifyPassword, {
+          method: 'POST',
+          headers: {
+          'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            password: password.value
+          })
+        }).then(function(res){
+          res.json().then(function(json){
+            if(res.ok) {
+              window.location.replace(json.destination);
+            } else {
+              error.style.visibility = "visible";
+              error.innerText = json.message;
+            }
+          });
+        }).catch(function(err) {
+          error.style.visibility = "visible";
+          error.innerText = "ERROR: " + err.message;
+        });
+      };
+    </script>
+  </body>
+
+</html>

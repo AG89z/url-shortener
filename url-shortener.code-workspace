@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": "back-end"
+		},
+		{
+			"path": "front-end"
+		}
+	],
+	"settings": {},
+	"editor.codeActionsOnSave": null
+}
