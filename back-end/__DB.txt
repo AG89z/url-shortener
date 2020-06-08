@@ -55,3 +55,4 @@
 {"id":"dc1e135f-5c59-4a6c-9a43-7014b1457441","author":"anonymous","link":"8e0Inj_Sf","destination":"https://google.com","created":"2020-06-03T20:53:11.078Z"}
 {"id":"4ebe9fa2-51d6-449f-9338-cce4a573d51f","author":"anonymous","link":"glRpvbv8e","destination":"https://google.com","created":"2020-06-03T21:11:57.540Z"}
 {"id":"e18377a4-7d97-4016-968f-66c2c214dfa1","author":"anonymous","link":"6gnvI3Tpk","destination":"https://google.com","created":"2020-06-03T21:12:24.666Z"}
+{"id":"76f3db6e-58f3-42d2-bb3c-e4f2df0cf9cb","author":"anonymous","link":"3XDkSKudk","destination":"https://google.com","created":"2020-06-08T15:23:32.804Z"}
