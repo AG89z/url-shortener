@@ -2,7 +2,6 @@ import config from "./config";
 
 import express, { Request, Response, NextFunction } from "express";
 import bodyParser from "body-parser";
-import { OpenApiValidator } from "express-openapi-validator";
 
 import linksController from "./controllers/links";
 import linksGatewayController from "./controllers/gateway";
@@ -28,21 +27,12 @@ app.get("/apii", (req, res) => {
   res.render("../src/views/api");
 });
 
-new OpenApiValidator({
-  apiSpec: API_SPEC,
-  validateRequests: true,
-  validateResponses: true,
-})
-  .install(app)
-  .then(() => {
-    app.use(linksController);
-    app.use(linksGatewayController);
-    app.use(errorHandler);
-    app.listen(PORT, () => {
-      console.log(`App listening on port http://localhost:${PORT}`);
-    });
-  })
-  .catch(console.log);
+app.use(linksController);
+app.use(linksGatewayController);
+app.use(errorHandler);
+app.listen(PORT, () => {
+  console.log(`App listening on port http://localhost:${PORT}`);
+});
 
 function logError(err: Record<string, unknown>) {
   console.log("Error caught by the default handler:");
