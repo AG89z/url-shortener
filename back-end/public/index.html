@@ -75,7 +75,7 @@
         e.preventDefault();
         form.classList.add("was-validated");
         if (form.checkValidity()) {
-          fetch("/v0/links", {
+          fetch("/create-link", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

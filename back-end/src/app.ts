@@ -8,7 +8,6 @@ import linksGatewayController from "./controllers/gateway";
 
 import morgan from "morgan";
 
-const API_SPEC = "api/api.yaml";
 const PORT = config().PORT;
 
 const app = express();
