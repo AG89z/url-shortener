@@ -1,4 +1,2 @@
-./**/node_modules
-./**/dist
-proxy-server
-ecosystem.config.js
+node_modules
+dist
